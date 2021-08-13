@@ -1,29 +1,68 @@
-# Next.js + Tailwind CSS Example
+# Alpha-Gallery Project
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## Team Name: Alpha
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+## Team members
 
-## Preview
+1. Basel Atalla.
+2. Bayan Al-khateb.
+3. Niveen Smadi
+4. Sewar Maqableh
+5. layan Abu-shaweesh
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+## Our project
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+A virtual gallery that presenting a collection of artworks, information about exhibitions, Artest.
+Providing a platform for artists to present their works since it becomes hard while current conditions caused by the pandemic.
 
-## Deploy your own
+### Minimum Viable Product (MVP) definition
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+- login page
+- Home page /exhibitions
+- feed
+- Profile page
+- About us
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Wireframes
 
-## How to use
+- Home
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+![Home](https://user-images.githubusercontent.com/55560502/129108229-d54a6cee-1fc6-4c48-9332-6a3b9e5e1eaa.png)
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+- About
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+![About](https://user-images.githubusercontent.com/55560502/129108255-0eab6929-23e0-4b7f-b439-4252e2ef96c3.png)
+
+
+- Profile
+![profile](https://user-images.githubusercontent.com/55560502/129108308-98083a9a-eda1-431b-8634-68780200bde6.png)
+
+
+- Feed
+![posts](https://user-images.githubusercontent.com/55560502/129108326-6c51dff4-1776-46b4-8828-6ab298522b5c.png)
+
+
+- login
+
+![login](https://user-images.githubusercontent.com/55560502/129108355-e0a705dd-b51d-4994-974c-2bdc8845e030.png)
+
+- garllery view
+
+![gallery](https://user-images.githubusercontent.com/55560502/129108383-bc47ba58-bdf4-46a3-999c-3b049344c1c1.png)
+
+
+## Domain Modeling
+
+![models](https://user-images.githubusercontent.com/55560502/129108530-fb051056-b85e-41bc-935b-6de830984733.jpg)
+
+
+
+## User Stories
+
+1- AS an artist user I want to have an account in gallery website.
+2- As a user I want to post a sample of my work in my account.
+3- As a user I want other user to have the ability to   comment and like myposts .
+4- As a user I want my posts to appear in other users feed page.
+5- As a user I want to have the abilty to organize an event to present my work.
+6- As a user I want to see a profile for me where I can post and create events.
+
