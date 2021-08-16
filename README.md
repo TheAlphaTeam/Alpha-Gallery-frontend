@@ -66,3 +66,7 @@ Providing a platform for artists to present their works since it becomes hard wh
 5- As a user I want to have the abilty to organize an event to present my work.
 6- As a user I want to see a profile for me where I can post and create events.
 
+
+
+
+
