@@ -1,3 +1,4 @@
+
 import Image from 'next/image'
 import logoPic from '../public/logo.png'
 import React from "react";
@@ -6,6 +7,7 @@ export default function Header (props) {
   return (
     <>
       <nav className={"flex flex-col flex-wrap items-center justify-between px-2 py-3 "}>
+
 
              <div className="my-3"> 
              <Image src={logoPic} alt="logo"  width={250} height={65} />
