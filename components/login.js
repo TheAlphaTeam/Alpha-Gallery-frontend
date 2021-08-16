@@ -138,24 +138,24 @@ export default function LoginForm(props){
                             <form onSubmit={createAccountHan}>
 
                                 <div className='flex my-2'>
-                                    <div className='my-2 mr-10 text-sm'>
+                                    <div className='w-6/12 my-2 mr-10 text-sm'>
                                         <label htmlFor='username' className='block text-black'>Username</label>
                                         <input type="text"  name='username' placeholder='Username'  autoFocus required  className='w-full py-3 mt-2 bg-gray-100 rounded-sm px-14 focus:outline-none'/>
                                     </div>
 
-                                    <div className='my-2 text-sm'>
+                                    <div className='w-6/12 my-2 text-sm'>
                                         <label htmlFor='email' className='block text-black'>Email</label>
                                         <input type='text' name='email' placeholder='Email Address' required  className='w-full py-3 mt-2 bg-gray-100 rounded-sm px-14 focus:outline-none'/>
                                     </div>
                                 </div>
                                 
                                 <div className='flex my-2'>
-                                    <div className='my-2 mr-10 text-sm'>
+                                    <div className='w-6/12 my-2 mr-10 text-sm'>
                                         <label htmlFor='firstName' className='block text-black'>First Name</label>
                                         <input type='text' name='firstName' placeholder='First Name' required  className='w-full py-3 mt-2 bg-gray-100 rounded-sm px-14 focus:outline-none'/>
                                     </div>
                                 
-                                    <div className='my-2 text-sm'>
+                                    <div className='w-6/12 my-2 text-sm'>
                                         <label htmlFor='lastName' className='block text-black'>Last Name</label>
                                         <input type='text' name='lastName' placeholder='Last Name' required  className='w-full py-3 mt-2 bg-gray-100 rounded-sm px-14 focus:outline-none'/>
                                     </div>
@@ -173,12 +173,12 @@ export default function LoginForm(props){
                                 </div>
 
                                 <div className='flex my-2'>
-                                    <div className='my-2 mr-10 text-sm'>
+                                    <div className='w-6/12 my-2 mr-10 text-sm'>
                                         <label htmlFor='date' className='block text-black'>Date</label>
-                                        <input type='date' name='date'  required className='w-full px-8 py-3 mt-2 bg-gray-100 rounded-sm focus:outline-none'/>
+                                        <input type='date' name='date'  required className='w-full py-3 mt-2 bg-gray-100 rounded-sm px-14 focus:outline-none'/>
                                     </div>
 
-                                    <div className='my-2 text-sm'>
+                                    <div className='w-6/12 my-2 text-sm'>
                                         <label htmlFor='city' className='block text-black'>City</label>
                                         <input type='text' name='city' placeholder='City' required  className='w-full py-3 mt-2 bg-gray-100 rounded-sm px-14 focus:outline-none'/>
                                     </div>
