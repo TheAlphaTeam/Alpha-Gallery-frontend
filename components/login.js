@@ -96,7 +96,7 @@ export default function LoginForm(props){
             <main style={{ backgroundImage: "url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center',backgroundSize: 'cover'}} className='flex items-center justify-center w-full h-screen'>
                 {!showForm && (
                    
-                    <div style={{backgroundColor:'rgba(0, 0,0,.3)'}} className='w-10/12 m-auto my-10 rounded-md shadow-md k lg:w-4/12 md:6/12'>
+                    <div style={{backgroundColor:'rgba(0, 0,0,.2)'}} className='w-10/12 m-auto my-10 rounded-md shadow-md k lg:w-4/12 md:6/12'>
                         <div className='px-8 py-8 '>
                                 <h1 className="mt-3 text-2xl font-medium text-center text-black">Login</h1>
             
@@ -130,7 +130,7 @@ export default function LoginForm(props){
                 {showForm && (
                      <section className='w-full h-full overflow-auto'>
                          
-                      <div style={{backgroundColor:'rgba(0, 0,0,.3)'}} className='w-10/12 mx-auto my-5 rounded-md shadow-md lg:w-6/12 md:6/12'>
+                      <div style={{backgroundColor:'rgba(0, 0,0,.2)'}} className='w-10/12 mx-auto my-5 rounded-md shadow-md lg:w-6/12 md:6/12'>
                          <div className='px-10 py-4 '>
                              
                          <h1 className="my-4 text-2xl font-medium text-center text-black">Sign Up </h1>
