@@ -1,21 +1,21 @@
 
-// import Header from './header'
+import Header from './header'
 import Slider from './slider'
 import Event from './events'
 import {SliderData} from '../components/sliderData';
 import News from './news'
-// import Footer from './footer'
+import Footer from './footer'
 
 export default function GalleryHome(props){
     return(
       <div>  
        <main>
-       {/* <Header/> */}
+       <Header/>
        <Slider slides={SliderData}/>
        <Event storedToken={props.storedToken}/>
        <News/>
      </main>
-     {/* <Footer/> */}
+     <Footer/>
  </div>
     );
   }

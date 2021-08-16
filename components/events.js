@@ -63,7 +63,7 @@ export default function Event(props){
                             <CardActionArea>
                               <CardMedia
                                 className={classes.media}
-                                image={item.image}
+                                image={item.image1}
                                 />
                               <CardContent>
                                 <Typography gutterBottom variant="h6" component="h2" size="small">

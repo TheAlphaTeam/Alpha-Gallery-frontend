@@ -1,10 +1,10 @@
 
-import Head from 'next/head'
+
 import axios from "axios";
 import { useEffect, useState } from 'react'
 import LoginForm from '../components/login'
 import GalleryHome from '../components/GalleryHome';
- import Header from '../components/header'
+
 
 const baseUrl= 'https://alphagallery.herokuapp.com/'
 const tokenUrl = baseUrl + 'api/token/'
@@ -45,7 +45,6 @@ useEffect(()=>{
 
   if (token || storedToken ){
     return (
-      // <Header/>
       <GalleryHome storedToken={storedToken} />
 
     )
