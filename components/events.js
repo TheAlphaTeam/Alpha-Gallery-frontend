@@ -22,37 +22,24 @@ const useStyles = makeStyles({
 
 export default function Event(props){
     const [eventdata, setEventdata] = React.useState([]);
-    const [token, setToken] = React.useState('');
-    const [refreshToken, setRefreshToken] = React.useState('');
-    const [credentials, setcredentials] = React.useState({username:'alpha', password:'alpha'});
+
+
     
-    async function getToken(credentials){
-        const config ={headers: {'Access-Control-Allow-Origin': '*',},}
-        const fetchedToken = await axios.post(tokenUrl, credentials);
-        setToken(fetchedToken.data.access);
-        console.log(fetchedToken.data.access);
-        setRefreshToken(fetchedToken.data.refresh);
-    }
     async function getEventsData(){
-        const config = {headers: {'Authorization': 'Bearer ' + token}};
+        const config = {headers: {'Authorization': 'Bearer ' + props.storedToken}};
         const edata = await axios.get(eventsUrl, config);
         setEventdata(edata);
         console.log(edata);
     }
     
-    React.useEffect(async () => {
-        
-        await getToken(credentials);
-        
-        
-    }, []);
+    
     
     React.useEffect( async() => {
-        if (token){
+        if (props.storedToken){
             await getEventsData();
             
         }
-    }, [token]);
+    }, [props.storedToken]);
     
     const classes = useStyles();
     if (eventdata.data){

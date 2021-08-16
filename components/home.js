@@ -6,17 +6,17 @@ import News from '../components/news'
 import Footer from '../components/footer'
 import Head from '../components/head'
 
-export default function Gallery(props){
+export default function GalleryHome(props){
     return(
       <div>  
     <Head/>
        <main>
-       <Header/>
+       {/* <Header/> */}
        <Slider/>
        <Event/>
        <News/>
      </main>
-     <Footer/>
+     {/* <Footer/> */}
  </div>
     );
   }

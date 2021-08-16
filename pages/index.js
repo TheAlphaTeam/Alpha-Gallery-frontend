@@ -1,4 +1,4 @@
-
+import GalleryHome from '../components/home'
 import Head from 'next/head'
 import axios from "axios";
 import { useEffect, useState } from 'react'
@@ -43,9 +43,9 @@ useEffect(()=>{
 
   if (token || storedToken ){
     return (
-      <h2>
-        {/* <Home/> */}
-      </h2>
+      
+         <GalleryHome storedToken ={storedToken} storedUser={storedUser} storedpass={storedpass} /> 
+      
     )
   }
   if (!storedToken && !token){
