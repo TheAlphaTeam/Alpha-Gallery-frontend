@@ -1,18 +1,18 @@
 export const SliderData = [
     {
       image:
-        'https://images.pexels.com/photos/2711718/pexels-photo-2711718.jpeg'
+        'http://res2.weblium.site/res/5c1cd98f2914810022558981/5c1e86a95072cf002298f1e4_optimized_1722'
     },
     {
       image:
-        'https://images.pexels.com/photos/277054/pexels-photo-277054.jpeg'
+        'https://res2.weblium.site/res/5c1cd98f2914810022558981/5c1e4c3446dbc900226954b7_optimized'
     },
     {
       image:
-        'https://images.pexels.com/photos/1005391/pexels-photo-1005391.jpeg'
+        ''
     },
     {
       image:
-        'https://images.pexels.com/photos/21264/pexels-photo.jpg'
+        ''
     }
   ];

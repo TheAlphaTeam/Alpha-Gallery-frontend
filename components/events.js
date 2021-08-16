@@ -59,10 +59,10 @@ export default function Event(props){
         return(
             <>
             <div style={{ backgroundImage: `url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')` }}> 
-            <h1 className="text-4xl font-bold text-center pt-10 pb-5 font-sans">Events</h1>
+            <h1 className="text-4xl font-bold text-center pt-20 pb-5 font-sans">Events</h1>
                                      
         
-            <div className="flex flex-row flex-wrap justify-center" > 
+            <div className="flex flex-row flex-wrap justify-center " > 
                   {  
                      eventdata.data.map(item => {
                          return(
