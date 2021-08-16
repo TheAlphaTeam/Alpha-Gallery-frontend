@@ -96,10 +96,10 @@ export default function LoginForm(props){
             <main style={{ backgroundImage: "url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center',backgroundSize: 'cover'}} className='flex items-center justify-center w-full h-screen'>
                 {!showForm && (
                    
-                    <div className='w-10/12 m-auto my-10 bg-black rounded-md shadow-md bg-opacity-20 lg:w-4/12 md:6/12'>
+                    <div style={{backgroundColor:'rgba(0, 0,0,.3)'}} className='w-10/12 m-auto my-10 rounded-md shadow-md k lg:w-4/12 md:6/12'>
                         <div className='px-8 py-8 '>
-                                <h1 className="mt-3 text-2xl font-medium text-center">Login</h1>
-
+                                <h1 className="mt-3 text-2xl font-medium text-center text-black">Login</h1>
+            
                                 <form onSubmit={submitHandeler} className="mt-6" >
 
                                     <div className='my-5 text-sm'>
@@ -112,7 +112,7 @@ export default function LoginForm(props){
                                         <input type="password"  name='password' placeholder='password' onChange={ passwordChangeHandler} required className='w-full px-4 py-3 mt-3 bg-gray-100 rounded-sm focus:outline-none'/>
                                     </div>
 
-                                    <input type="submit"  value='Sign In' className='block w-full p-3 text-center text-white duration-300 bg-gray-700 rounded-sm hover:bg-black'/>
+                                    <input type="submit"  value='Login' className='block w-full p-3 text-center text-white duration-300 bg-gray-700 rounded-sm hover:bg-black'/>
                                 </form>
 
                             <div className='flex items-center justify-center mt-8 md:justify-between'>
@@ -121,7 +121,7 @@ export default function LoginForm(props){
                                 <div style={{height:'1px'}} className='hidden w-5/12 bg-gray-400 md:block'></div>
                             </div>
                             
-                            <h3 className="mt-8 text-xs text-center text-gray-700 font-meduim">Don't have an account?  <button onClick={signUpForm} className='font-medium text-black'>Create One</button> </h3>
+                            <h3 className="mt-8 text-sm text-center text-gray-700 font-meduim">Don't have an account?  <button onClick={signUpForm} className='font-medium text-black'>Create One</button> </h3>
                         </div>
                     </div>
                     )
@@ -130,10 +130,10 @@ export default function LoginForm(props){
                 {showForm && (
                      <section className='w-full h-full overflow-auto'>
                          
-                      <div className='w-10/12 mx-auto my-5 bg-black rounded-md shadow-md lg:w-6/12 md:6/12 bg-opacity-20'>
+                      <div style={{backgroundColor:'rgba(0, 0,0,.3)'}} className='w-10/12 mx-auto my-5 rounded-md shadow-md lg:w-6/12 md:6/12'>
                          <div className='px-10 py-4 '>
                              
-                         <h1 className="my-4 text-2xl font-medium text-center">Sign Up </h1>
+                         <h1 className="my-4 text-2xl font-medium text-center text-black">Sign Up </h1>
 
                             <form onSubmit={createAccountHan}>
 
@@ -200,7 +200,7 @@ export default function LoginForm(props){
                                 <div style={{height:'1px'}} className='hidden w-5/12 bg-gray-400 md:block'></div>
                             </div>
 
-                            <h3 className="mt-8 text-xs text-center text-gray-700 font-meduim"> Have an account?  <button onClick={loginForm} className='font-medium text-black'>Login</button> </h3>
+                            <h3 className="mt-8 text-sm text-center text-gray-700 font-meduim"> Have an account?  <button onClick={loginForm} className='font-medium text-black'>Login</button> </h3>
                             
                          </div>
                     </div> 

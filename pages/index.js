@@ -1,8 +1,9 @@
-import GalleryHome from '../components/home'
 import Head from 'next/head'
 import axios from "axios";
 import { useEffect, useState } from 'react'
 import LoginForm from '../components/login'
+import GalleryHome from '../components/GalleryHome';
+ import Header from '../components/header'
 
 const baseUrl= 'https://alphagallery.herokuapp.com/'
 const tokenUrl = baseUrl + 'api/token/'
@@ -27,7 +28,6 @@ function loginHandler(credentials){
 }
 
 
-
 useEffect(()=>{
   setStoredPass(localStorage.getItem('password'))
   setStoredUser(localStorage.getItem('username'))
@@ -44,15 +44,15 @@ useEffect(()=>{
 
   if (token || storedToken ){
     return (
-      
-         <GalleryHome storedToken ={storedToken} storedUser={storedUser} storedpass={storedpass} /> 
-      
+      // <Header/>
+      <GalleryHome storedToken={storedToken} />
+
     )
   }
+  
   if (!storedToken && !token){
     return(
   <LoginForm loginHandler={loginHandler}  token={token}/>
     )
   }
 }
-

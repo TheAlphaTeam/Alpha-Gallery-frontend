@@ -27,6 +27,7 @@ export default function Event(props){
     
     async function getEventsData(){
         const config = {headers: {'Authorization': 'Bearer ' + props.storedToken}};
+        console.log(config)
         const edata = await axios.get(eventsUrl, config);
         setEventdata(edata);
         console.log(edata);
@@ -35,6 +36,7 @@ export default function Event(props){
     
     
     React.useEffect( async() => {
+      console.log(props)
         if (props.storedToken){
             await getEventsData();
             
@@ -46,14 +48,14 @@ export default function Event(props){
         return(
             <>
             <div style={{ backgroundImage: `url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')` }}> 
-            <h1 className="text-4xl font-bold text-center pt-10 pb-5 font-sans">Events</h1>
+            <h1 className="pt-10 pb-5 font-sans text-4xl font-bold text-center">Events</h1>
                                      
         
             <div className="flex flex-row flex-wrap justify-center" > 
                   {  
                      eventdata.data.map(item => {
                          return(
-                             <div className="mb-5 pr-5">  
+                             <div className="pr-5 mb-5">  
                             <Card className={classes.root}>
                             <CardActionArea>
                               <CardMedia
@@ -72,7 +74,7 @@ export default function Event(props){
                             </CardActionArea>
                             <CardActions>
                                 <div className="flex flex-row justify-end w-full">  
-                            <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                            <button className="px-4 py-2 mb-3 ml-3 text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
                             type="button"
                              style={{ transition: "all .15s ease" }}
                             >
@@ -88,11 +90,11 @@ export default function Event(props){
     })
 }
 </div>   
-           <div className=" relative" >
-            <img className="  top-0 "src='http://res2.weblium.site/res/5c74178873dbed00222cf694/5c750b1f8de8fd0023d18ce5_optimized_1920' alt="Logo" /> 
-             <h3 className=" absolute top-10 left-10 z-20 text-white"> ALPHA GALLERY </h3>
-             <p className=" absolute top-20 left-10 z-20 text-white">____________________________</p>
-             <p className=" absolute top-1/3 left-10 z-20 text-white text-xl">At Alpha , we are convinced that the digital space is an invaluable tool for bringing transparency
+           <div className="relative " >
+            <img className="top-0 "src='http://res2.weblium.site/res/5c74178873dbed00222cf694/5c750b1f8de8fd0023d18ce5_optimized_1920' alt="Logo" /> 
+             <h3 className="absolute z-20 text-white top-10 left-10"> ALPHA GALLERY </h3>
+             <p className="absolute z-20 text-white top-20 left-10">____________________________</p>
+             <p className="absolute z-20 text-xl text-white top-1/3 left-10">At Alpha , we are convinced that the digital space is an invaluable tool for bringing transparency
              and equity<br></br> to the art market.  We provide artists with the tools that enable them to independently manage <br></br> the sale 
             of their works. Our team is working around the clock, committing their energy <br></br> to promoting Alpha artists to a global audience.
             
