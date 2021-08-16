@@ -8,52 +8,28 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 
 const baseUrl = `https://alphagallery.herokuapp.com/`
-const tokenUrl = baseUrl + `api/token/`
 const postUrl = baseUrl + `api/v1/a-gallery/posts/`
-const currentUrl = baseUrl + `api/v1/a-gallery/current`
+
 
 export default function Feed(props) {
 
-  const [text, setText] = React.useState('');
-
   const [postdata, setPostdata] = React.useState([]);
-  const [token, setToken] = React.useState('');
-
-  const [credentials, setcredentials] = React.useState({ username: 'alpha', password: 'alpha' });
-
-
-  async function getToken(credentials) {
-    const config = { headers: { 'Access-Control-Allow-Origin': '*', }, }
-    const fetchedToken = await axios.post(tokenUrl, credentials);
-    setToken(fetchedToken.data.access);
-    console.log(fetchedToken.data.access);
-  }
-
+ 
   async function getPostData() {
-    const config = { headers: { 'Authorization': 'Bearer ' + token } };
+    const config = { headers: { 'Authorization': 'Bearer ' + props.storedToken } };
     const pdata = await axios.get(postUrl, config);
     setPostdata(pdata);
     console.log(pdata);
   }
 
-  React.useEffect(() => {
-
-    getToken(credentials);
-
-
-  }, []);
 
   React.useEffect(() => {
-    if (token) {
+    if (props.storedToken) {
       getPostData();
     }
-  }, [token]);
+  }, [props.storedToken]);
 
 
-
-  function handleChange(event) {
-    setText(event.target.value);
-  }
 
 
 
