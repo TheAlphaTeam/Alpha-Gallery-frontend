@@ -13,6 +13,7 @@ export default function GalleryHome(props){
        <Header/>
        <Slider slides={SliderData}/>
        <Event storedToken={props.storedToken}/>
+       {/* <Feed storedToken={props.storedToken}/> */}
        <News/>
      </main>
      <Footer/>
