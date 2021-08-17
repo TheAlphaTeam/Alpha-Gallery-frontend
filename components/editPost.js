@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Link from "next/link";
+import Load from "../components/loading"
 
 const baseUrl = `https://alphagallery.herokuapp.com/`
 const tokenUrl = baseUrl + 'api/token/'
+
 
 export default function EditPost(props) {
     const [postdata, setPostdata] = React.useState();
@@ -140,10 +142,10 @@ export default function EditPost(props) {
 }else{
     return(  
     <>    
-        <div className="flex items-center justify-center h-11/12 py-80">
-          <img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>
-        </div>
-
+  
+<div className="pb-10 ">
+<Load/>
+</div> 
     </>
           )
 }

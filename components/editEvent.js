@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Link from "next/link";
+import Load from "../components/loading"
 
 const baseUrl = `https://alphagallery.herokuapp.com/`
 const tokenUrl = baseUrl + 'api/token/'
+
 
 export default function Editevent(props) {
     const [eventdata, setEventdata] = React.useState();
@@ -181,9 +183,10 @@ export default function Editevent(props) {
 }else{
     return(  
     <>    
-        <div className="flex flex-col items-center justify-center w-full h-4/5 ">
-          <img className="my-80" src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>
-        </div>
+     
+<div className="pb-10 ">
+<Load/>
+</div> 
 
     </>
           )
