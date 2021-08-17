@@ -1,4 +1,5 @@
 import React from 'react';
+import Load from "../components/loading"
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -111,7 +112,10 @@ export default function Event(props){
     </>
               )
               }else{
-                  return(<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>)
+                  return(
+                    <div className="pb-10 ">
+                    <Load/>
+                    </div> )
                 }
     
 }
