@@ -7,12 +7,18 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Link from 'next/link'
 
-
+import Header from "./header.js";
 import Navbar from "./Navbar.js";
-import Footer from "./Footer.js";
+import Footer from "./footer.js";
 import { getDomainLocale } from "next/dist/shared/lib/router/router";
+import { data } from "autoprefixer";
+
 
 const baseUrl= `https://alphagallery.herokuapp.com/`
 const tokenUrl = baseUrl + `api/token/`
@@ -210,7 +216,8 @@ export default function Profilecomponent(props) {
  if(userdata && eventdata && postdata){
       return (
     <>
-      <Navbar transparent />  
+    <Header/>
+      {/* <Navbar transparent />   */}
       <main className="profile-page">
         <section className="relative block" style={{ height: "500px" }}>
           <div
@@ -323,7 +330,7 @@ export default function Profilecomponent(props) {
                   </div>
                 </div>
                 <div className="flex flex-row mt-10 py-10 border-t border-gray-300 ">
-                <div className="flex flex-col flex-wrap justify-center border-r border-gray-300 px-10" > 
+                <div className="flex flex-col flex-wrap justify-center border-r border-gray-300 px-5 w-1/3 items-center" > 
                   <div className="font-bold font-sans text-lg mb-5">
                       <h3>My Events</h3>
                   </div>
@@ -371,11 +378,75 @@ export default function Profilecomponent(props) {
                           )}
                       })
                   }
+                 
+                  </div>
+                  <div className="flex flex-col flex-wrap border-gray-300 px-5 w-2/3 items-center " > 
+                     <div className="font-bold font-sans text-lg mb-0"> <h3>My Posts</h3></div>
+                     {
+            postdata.data.map(item => {
+              if (item.username== userdata.username){
+                return (
+                  <div className="flex flex-col justify-center bg-white border font-sans shadow-lg border-gray-500 rounded-md  w-full h-auto my-5 ">
+                    
+                  <div className="flex flex-row w-full">
+                    <img className="w-20 h-20 rounded-full m-5"src={item.image}/>
+                    <div className="flex flex-col mt-8 justify-start items-baseline"> 
+                    <h6 className="font-bold text-lg">@{item.username}</h6>
+                    <p className="text-sm">{item.created_at.slice(2, 10)}</p>
+                    {/* <p>{item.created_at.slice(11, 16)}</p>  */}
+                    </div>
+                    <div className="flex flex-row justify-end w-full mb-2">  
+                             <div>
+                             <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                             type="button"
+                              style={{ transition: "all .15s ease" }}
+                             >
+                              <Link href={{pathname:"/update/post", query:{id:item.id}}} ><a>Edit</a></Link>
+                             </button>
+                             </div>
+                             
+                             <form onSubmit={deleteventHandler}>
+                              <input type="hidden" name="id" value={item.id}/> 
+                             <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                             type="submit" style={{ transition: "all .15s ease" }}>
+                             Delete
+                             </button>
+                             </form>
+                             </div>
+                  </div>
+                    <p className=" m-3.5 flex-auto flex-end text-s">{item.discerption}</p>
+                  <div className="h-96 w-10/12 mx-auto">
+                  <img className="w-full h-full " src={item.image1}/>
+                 </div>
+                  <div className="flex flex-row  ml-10">
+                    <form className="w-full">
+                    <FormControlLabel className="w-30 h-20"
+                    control={<Checkbox icon={<FavoriteBorder />} 
+                    checkedIcon={<Favorite />} name="like"  />} label={item.likes}/>
+                    <input className=" px-3 py-1.5 placeholder-blueGray-300 text-blueGray-600 w-8/12 relative bg-gray-200 rounded text-s border-0 shadow outline-none focus:outline-none focus:ring "type='text' name='comment'/>
+                    <button className="px-4 py-2 mb-3 ml-3 text-s font-bold text-white bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
+                            type="button"
+                            style={{ transition: "all .15s ease" }}
+                            >
+                           Comment
+                            </button>
+                            
+                    </form> 
                   </div>
                 </div>
-              </div>
+                )
+              }
+              })
+            }
+            
             </div>
-          </div>
+            </div>
+            
+            
+            
+            </div>
+            </div>
+            </div>
         </section>
           {showModal1 ? (
             <>
@@ -527,8 +598,8 @@ export default function Profilecomponent(props) {
 }else{
   return(
     <>
-      
-    <Navbar transparent />
+      <Header/>
+    {/* <Navbar transparent /> */}
     <main className="profile-page">
       <section className="relative block" style={{ height: "500px" }}>
         <div

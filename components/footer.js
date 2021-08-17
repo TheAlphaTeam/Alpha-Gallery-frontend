@@ -74,17 +74,17 @@ export default function Footer() {
                             </span>
                             <ul className="list-unstyled">
                                 <li>
-                                <a className="text-white hover:text-gray-900 font-sans block pb-2 text-md"
+                                <a className="text-white hover:text-gray-300 font-sans block pb-2 text-md"
                                     href="https://www.creative-tim.com/presentation">About
                                 </a>
                                 </li>
                                 <li>
-                                <a className="text-white hover:text-gray-900 font-sans block pb-2 text-md"
+                                <a className="text-white hover:text-gray-300 font-sans block pb-2 text-md"
                                     href="https://blog.creative-tim.com">Home
                                 </a>
                                 </li>
                                 <li>
-                                <a className="text-white hover:text-gray-900 font-sans block pb-2 text-md"
+                                <a className="text-white hover:text-gray-300 font-sans block pb-2 text-md"
                                     href="https://www.github.com/creativetimofficial">Github
                                 </a>
                                 </li>
@@ -99,17 +99,17 @@ export default function Footer() {
                             </span>
                             <ul className="list-unstyled">
                                 <li>
-                                <a className="text-white hover:text-gray-900 font-sans block pb-2 text-md"
+                                <a className="text-white hover:text-gray-300 font-sans block pb-2 text-md"
                                 href="https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md">MIT License
                                 </a>
                                 </li>
                                 <li>
-                                <a className="text-white hover:text-gray-900 font-sans block pb-2 text-md"
+                                <a className="text-white hover:text-gray-300 font-sans block pb-2 text-md"
                                     href="https://creative-tim.com/privacy">Privacy Policy
                                 </a>
                                 </li>
                                 <li>
-                                <a className="text-white hover:text-gray-900 font-sans block pb-2 text-md"
+                                <a className="text-white hover:text-gray-300 font-sans block pb-2 text-md"
                                     href="https://creative-tim.com/contact-us">Contact Us
                                 </a>
                                 </li>
@@ -128,7 +128,7 @@ export default function Footer() {
                         Copyright © {new Date().getFullYear()}{" "}Alpha Gallery By <br/>{" "}
                         <a
                         href="https://www.creative-tim.com"
-                        className="text-white hover:text-gray-900"
+                        className="text-white hover:text-gray-300"
                         >
                         Alpha Team
                         </a>
