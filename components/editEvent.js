@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Link from "next/link";
-
+import Load from "../components/loading"
 export default function Editevent(props) {
     const [eventdata, setEventdata] = React.useState();
     const [showAlert, setShowAlert] = React.useState(false);
@@ -158,9 +158,10 @@ export default function Editevent(props) {
 }else{
     return(  
     <>    
-        <div className="w-full h-4/5 flex flex-col justify-center items-center ">
-          <img className="my-80" src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>
-        </div>
+     
+<div className="pb-10 ">
+<Load/>
+</div> 
 
     </>
           )
