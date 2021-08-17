@@ -370,9 +370,11 @@ export default function Profilecomponent(props) {
                              <div className="pr-5 mb-5" id={item.id}>  
                             <Card className={classes.root}>
                             <CardActionArea>
-                            <Link href="https://projects.benstevens.uk/gallery3d/">
+                            <Link href={{pathname:"/gallery", query:{id:item.id}}} ><a>
+                            
                               <CardMedia className={classes.media} image={item.image1}/>
-                              </Link>
+                              
+                            </a></Link>
                               <CardContent>
                                 <Typography gutterBottom variant="h6" component="h2" size="small">
                                   {item.title} || {item.date}
