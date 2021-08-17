@@ -246,7 +246,7 @@ export default function Profilecomponent(props) {
       return (
     <>
     <Header/>
-      {/* <Navbar transparent />   */}
+         
       <main className="profile-page">
         <section className="relative block" style={{ height: "500px" }}>
           <div

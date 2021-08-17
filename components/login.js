@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-
-
+import Image from 'next/image'
+import logoPic from '../public/logo.png'
 
 const baseUrl= 'https://alphagallery.herokuapp.com/'
 const userUrl = baseUrl + 'api/v1/a-gallery/users/'
@@ -88,15 +88,14 @@ export default function LoginForm(props){
             <Head>
             <title>Alpha Gallery </title>
             </Head>
-
-            <header> </header>
-            {/* https://i.pinimg.com/originals/aa/46/93/aa4693c1130c17f0b729fd2f434f06f1.jpg */}
             <main style={{ backgroundImage: "url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center',backgroundSize: 'cover'}} className='flex items-center justify-center w-full h-screen'>
                 {!showForm && (
                    
                     <div style={{backgroundColor:'rgba(0, 0,0,.2)'}} className='w-10/12 m-auto my-10 rounded-md shadow-md k lg:w-4/12 md:6/12'>
                         <div className='px-8 py-8 '>
-                                <h1 className="mt-3 text-2xl font-medium text-center text-black">Login</h1>
+                                <div className="my-3 mx-20"> 
+                                <Image src={logoPic} alt="logo"  width={250} height={65} />
+                                </div>
             
                                 <form onSubmit={submitHandeler} className="mt-6" >
 

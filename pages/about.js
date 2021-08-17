@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import Header from '../components/header';
 import Footer from '../components/footer';
-import Head from 'next/head';
+
 
 export default function About() {
 
@@ -18,60 +18,26 @@ export default function About() {
             </Head>
             <Header/>
             <main>
+                    <h3 className="font-sans text-xl font-bold absolute   capitalize align-middle text-justify">
+
+alpha gallery it's gallery  to show A virtualgallery
+that presentingcollection of<br></br> artworks, information
+about exhibitions,Artest. Providinga platform for artists
+to present their works since it becomes hard while current
+conditions caused by the pandemic. </h3>
             <div className="relative block " style={{ height: "300px" }}>
 
-                <div className="absolute top-0 items-center w-full h-full text-3xl font-extrabold text-center" style={{ backgroundImage: `url('http://res2.weblium.site/res/5c1cd98f2914810022558981/5c223adfbd2020002629619e_optimized_1920')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover' }} >
+                <div className="absolute top-0 items-center w-full h-full text-3xl font-extrabold text-center" style={{ backgroundImage: `url('http://res2.weblium.site/res/5c1cd98f2914810022558981/5c223adfbd2020002629619e_optimized_1920')`, backgroundRepeat: 'repeat', backgroundPosition: 'center', backgroundSize: 'cover' }} >
                     <div className="absolute z-0 w-full h-full bg-black opacity-50">
-
                     </div>
-                    <h1 className="text-black text-align pt-28 ">  About Alpha Gallery </h1>
                 </div>
             </div>
             <div className="" style={{ backgroundImage: `url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover' }}>
 
-
-                <div className="flex w-full py-10 flex-rows ">
-
-                    <div className="flex felx-cols ">
-
-                        <div className="p-2">
-                            <img src="https://res2.weblium.site/res/5c1cd98f2914810022558981/5c223c62bd20200026296311_optimized" className="pb-2" />
-
-                            <img src="https://images.pexels.com/photos/2121666/pexels-photo-2121666.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className="pb-2 " />
-                            <img src="https://res2.weblium.site/res/5c1cd98f2914810022558981/5c223c5ebd202000262962de_optimized" className="pb-2 " />
-
-                        </div>
-                        <div className="p-2">
-                            <img src="https://images.pexels.com/photos/2123337/pexels-photo-2123337.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=700 " className="pb-5" />
-
-                            <img src="https://images.pexels.com/photos/2372979/pexels-photo-2372979.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className="" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 className="font-sans text-xl font-bold text-center capitalize align-middle animate-pulse pt-44 ">
-
-                            alpha gallery it's gallery  to show A virtualgallery
-                            that presentingcollection of artworks, information
-                            about exhibitions,Artest. Providinga platform for artists
-                            to present their works since it becomes hard while current
-                            conditions caused by the pandemic. </h3>
-                    </div>
-
-
-
-                </div>
-
-
-
-
-
-                <h1 className="pt-10 pb-5 font-sans text-5xl font-bold text-center "> Our Team</h1>
-
-
-
-
-
+            
+           <hr className="text-xl font-bold text-gray-900"/>
+           <hr/>
+          
                 <div className="flex flex-row flex-wrap items-center justify-center pt-10">
                     <div className="flex flex-col items-center justify-center p-1 h-96 w-96 ">
                         <div className="inline-flex overflow-hidden rounded-full shadow-lg h-60 w-60">
@@ -249,7 +215,38 @@ export default function About() {
 
                 </div>
 
+            {/* 
+                <div className="flex w-full py-10 flex-rows ">
 
+                    <div className="flex felx-cols ">
+
+                        <div className="p-2">
+                            <img src="https://res2.weblium.site/res/5c1cd98f2914810022558981/5c223c62bd20200026296311_optimized" className="pb-2" />
+
+                            <img src="https://images.pexels.com/photos/2121666/pexels-photo-2121666.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className="pb-2 " />
+                            <img src="https://res2.weblium.site/res/5c1cd98f2914810022558981/5c223c5ebd202000262962de_optimized" className="pb-2 " />
+
+                        </div>
+                        <div className="p-2">
+                            <img src="https://images.pexels.com/photos/2123337/pexels-photo-2123337.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=700 " className="pb-5" />
+
+                            <img src="https://images.pexels.com/photos/2372979/pexels-photo-2372979.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className="" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="font-sans text-xl font-bold  capitalize align-middle pt-44 text-justify">
+
+                            alpha gallery it's gallery  to show A virtualgallery
+                            that presentingcollection of<br></br> artworks, information
+                            about exhibitions,Artest. Providinga platform for artists
+                            to present their works since it becomes hard while current
+                            conditions caused by the pandemic. </h3>
+                    </div>
+
+
+
+                </div> */}
             </div>
             </main>
             <Footer/>

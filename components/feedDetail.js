@@ -57,6 +57,7 @@ export default function FeedDetail(props) {
         {
           postdata.data.map(item => {
             return (
+              
               <div className="flex flex-col justify-center w-8/12 mx-auto my-24 font-sans bg-white border border-gray-500 rounded-md shadow-lg h-2/4 ">
                 <div className="flex flex-row w-full">
                   <img className="w-20 h-20 m-5 rounded-full"src={item.image}/>

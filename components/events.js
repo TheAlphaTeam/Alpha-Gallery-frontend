@@ -16,6 +16,9 @@ const eventsUrl = baseUrl + `api/v1/a-gallery/events/`
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    minWidth:344.5,
+    maxHeight:325,
+    minHeight:324.5,
   },
   media: {
     height: 140,
@@ -118,12 +121,9 @@ export default function Event(props){
              <p className="absolute z-20 text-white top-20 left-10">____________________________</p>
              <p className="absolute z-20 text-xl text-white top-1/3 left-10">At Alpha , we are convinced that the digital space is an invaluable tool for bringing transparency
              and equity<br></br> to the art market.  We provide artists with the tools that enable them to independently manage <br></br> the sale 
-            of their works. Our team is working around the clock, committing their energy <br></br> to promoting Alpha artists to a global audience.
+            of their works. Our team is working around the clock, committing their energy <br></br> to promoting Alpha artists to a global audience.</p>
             
-            <br></br> At Alpha , we are convinced that the digital space is an invaluable tool for bringing transparency
-             and equity<br></br> to the art market.  We provide artists with the tools that enable them to independently manage <br></br> the sale 
-            of their works. Our team is working around the clock, committing their energy <br></br> to promoting Alpha artists to a global audience.
-            </p>
+         
            </div>
 </div>
     </>
