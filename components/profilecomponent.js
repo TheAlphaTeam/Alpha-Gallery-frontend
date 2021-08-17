@@ -123,6 +123,21 @@ export default function Profilecomponent(props) {
     }
   }
 
+  async function postDeleteRequset(id){
+    const config = {headers: {'Authorization': 'Bearer ' + token}};
+    const response = await axios.delete(`https://alphagallery.herokuapp.com/api/v1/a-gallery/posts/${id}/`, config);
+    console.log(response)
+    if (response.status == 204){
+      setShowModal2(false);
+      setIfError('Deleted Successfully')
+      setShowAlert(true)
+      getPostData();
+    }else{
+      setShowModal2(false);
+      setIfError(response.status)
+      setShowAlert(true)
+    }
+  }
   function postsubmitHandler(event){
     event.preventDefault();
     const post ={
@@ -179,6 +194,12 @@ export default function Profilecomponent(props) {
     const id = parseInt(event.target.id.value);
     eventDeleteRequset(id);
     getEventsData()
+  }
+  function deletepostHandler(event){
+    event.preventDefault();
+    const id = parseInt(event.target.id.value);
+    postDeleteRequset(id);
+    getPostData()
   }
   React.useEffect( async () => {
     
@@ -341,7 +362,9 @@ export default function Profilecomponent(props) {
                              <div className="mb-5 pr-5" id={item.id}>  
                             <Card className={classes.root}>
                             <CardActionArea>
+                            <Link href="https://projects.benstevens.uk/gallery3d/">
                               <CardMedia className={classes.media} image={item.image1}/>
+                              </Link>
                               <CardContent>
                                 <Typography gutterBottom variant="h6" component="h2" size="small">
                                   {item.title} || {item.date}
@@ -388,7 +411,7 @@ export default function Profilecomponent(props) {
                 return (
                   <div className="flex flex-col justify-center bg-white border font-sans shadow-lg border-gray-500 rounded-md  w-full h-auto my-5 ">
                     
-                  <div className="flex flex-row w-full">
+                  <div className="flex flex-row items-center w-full">
                     <img className="w-20 h-20 rounded-full m-5"src={item.image}/>
                     <div className="flex flex-col mt-8 justify-start items-baseline"> 
                     <h6 className="font-bold text-lg">@{item.username}</h6>
@@ -405,7 +428,7 @@ export default function Profilecomponent(props) {
                              </button>
                              </div>
                              
-                             <form onSubmit={deleteventHandler}>
+                             <form onSubmit={deletepostHandler}>
                               <input type="hidden" name="id" value={item.id}/> 
                              <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
                              type="submit" style={{ transition: "all .15s ease" }}>

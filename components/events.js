@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+import Link from 'next/link';
 const baseUrl= `https://alphagallery.herokuapp.com/`
 const tokenUrl = baseUrl + `api/token/`
 const eventsUrl = baseUrl + `api/v1/a-gallery/events/`
@@ -81,7 +82,7 @@ export default function Event(props){
                             type="button"
                              style={{ transition: "all .15s ease" }}
                             >
-                            View 
+                            <Link href="https://projects.benstevens.uk/gallery3d/">View</Link>
                             </button>
                             </div>
                           
