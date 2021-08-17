@@ -58,17 +58,17 @@ export default function Feed(props) {
                  </div>
                   <div className="flex flex-row  ml-10">
                     <form className="w-full">
-                    <FormControlLabel className="w-20 h-20"
-                    control={<Checkbox icon={<FavoriteBorder />} 
-                    checkedIcon={<Favorite />} name="like"  />} label="like"/>
-                    <input className=" px-3 py-1.5 placeholder-blueGray-300 text-blueGray-600 w-8/12 relative bg-gray-200 rounded text-s border-0 shadow outline-none focus:outline-none focus:ring "type='text' name='comment'/>
-                    <button className="px-4 py-2 mb-3 ml-3 text-s font-bold text-white bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
-                            type="button"
-                             style={{ transition: "all .15s ease" }}
-                            >
-                           Comment
-                            </button>
+                      <button type="submit"><FormControlLabel className="w-20 h-20"
+                      control={<Checkbox icon={<FavoriteBorder />} 
+                      checkedIcon={<Favorite />} name="like"  />} label="like"/>
+                      </button>
                     </form> 
+                    <form onSubmit>
+                      <input className=" px-3 py-1.9 placeholder-blueGray-300 text-blueGray-600 w-8/12 relative bg-gray-200 rounded text-s border-0 shadow outline-none focus:outline-none focus:ring "type='text' name='comment'/>
+                      <button className="px-4 py-2 mb-3 ml-3 text-s font-bold text-white bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500" type="submit" style={{ transition: "all .15s ease" }}>
+                        Comment
+                      </button>
+                    </form>
                   </div>
                 </div>
                 )
