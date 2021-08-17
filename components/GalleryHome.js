@@ -7,16 +7,17 @@ import News from './news'
 import Footer from './footer'
 import React from 'react';
 import axios from 'axios';
+import Feed from "./feeddetail"
 export default function GalleryHome(props){
 
     return(
       <div>  
        <main>
        <Header/>
-       <Slider slides={SliderData}/>
-       <Event storedToken={props.storedToken}/>
-       {/* <Feed storedToken={props.storedToken}/> */}
-       <News/>
+       {/* <Slider slides={SliderData}/> */}
+       {/* <Event storedToken={props.storedToken}/> */}
+       <Feed storedToken={props.storedToken}/>
+       {/* <News/> */}
      </main>
      <Footer/>
  </div>
