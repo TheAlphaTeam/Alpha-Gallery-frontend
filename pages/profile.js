@@ -1,5 +1,5 @@
 import React from "react";
-import Profilecomponent from "../components/profilecomponent";
+import Profilecomponent from "../components/profileComponent";
 
 
 export default function Profile(props){

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from 'react'
 import LoginForm from '../components/login'
-import GalleryHome from '../components/GalleryHome';
+import HomePage  from "./home";
+
 
 
 const baseUrl= 'https://alphagallery.herokuapp.com/'
@@ -10,10 +11,7 @@ const tokenUrl = baseUrl + 'api/token/'
 export default function Home() {
 
   const [token, setToken] = useState('');
-  const [storedToken, setStoredToken] = useState('')
-  const [storedUser, setStoredUser] = useState('')
-  const [storedpass, setStoredPass] = useState('')
-
+  const [credentials, setcredentials] = useState();
 
 async function getToken(credentials){
   const fetchedToken = await axios.post( tokenUrl, credentials);
@@ -28,27 +26,23 @@ function loginHandler(credentials){
 
 
 useEffect(()=>{
-  setStoredPass(localStorage.getItem('password'))
-  setStoredUser(localStorage.getItem('username'))
-  setStoredToken(localStorage.getItem('token'))
-})
-   
-useEffect(()=>{
   if (!localStorage.getItem('token')){
     localStorage.setItem('token',token)
+  }else{
+    setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
   }
-})
+},[token])
 
- 
 
-  if (token || storedToken ){
-    return (
-      <GalleryHome storedToken={storedToken} />
 
-    )
-  }
+if (token || credentials){
+  return (
+    <HomePage/>
+
+  )
+}
   
-  if (!storedToken && !token){
+  if (!credentials && !token){
     return(
   <LoginForm loginHandler={loginHandler}  token={token}/>
     )

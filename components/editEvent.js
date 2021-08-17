@@ -2,21 +2,35 @@ import React from "react";
 import axios from "axios";
 import Link from "next/link";
 import Load from "../components/loading"
+
+const baseUrl = `https://alphagallery.herokuapp.com/`
+const tokenUrl = baseUrl + 'api/token/'
+
+
 export default function Editevent(props) {
     const [eventdata, setEventdata] = React.useState();
     const [showAlert, setShowAlert] = React.useState(false);
     const [iferror, setiferror] = React.useState('');
+    const [token, setToken] = React.useState('');
+    const [credentials, setcredentials] = React.useState();
+  
 
+  async function getToken(credentials){
+    const fetchedToken = await axios.post(tokenUrl, credentials);
+    setToken(fetchedToken.data.access);
+  }
+
+  
     async function getEventsData(){
         console.log(props.eventId)
-        const config = {headers: {'Authorization': 'Bearer ' + props.token}};
+        const config = {headers: {'Authorization': 'Bearer ' + token}};
         const edata = await axios.get(`https://alphagallery.herokuapp.com/api/v1/a-gallery/events/${props.eventId}/`, config);
         setEventdata(edata.data);
         console.log(edata);
     }
     async function events_put_request(data){
         console.log(props.id)
-        const config = {headers: {'Authorization': 'Bearer ' + props.token}};
+        const config = {headers: {'Authorization': 'Bearer ' + token}};
         const responce = await axios.put(`https://alphagallery.herokuapp.com/api/v1/a-gallery/events/${props.eventId}/`, data, config);
         console.log(responce);
         if(responce.status == 200){
@@ -25,12 +39,23 @@ export default function Editevent(props) {
         }
 
     }
+  
+    React.useEffect(() => {
+      setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
+    }, []);
+    
+    
     React.useEffect( async () => {
-        if (props.token){
-          
-          await getEventsData();
-        }
-      }, [props.token]);
+      if(credentials){
+        await getToken(credentials);
+      }
+    }, [credentials]);
+  
+    React.useEffect( async () => {
+      if (token){
+        await getEventsData();
+      } 
+    }, [token]);
 
     function eventEditHandler(event){
         event.preventDefault();
@@ -70,19 +95,19 @@ export default function Editevent(props) {
 
     <div>
         {console.log(eventdata)}
-    <div className="justify-center items-center flex overflow-y-auto relative  inset-0 z-50 outline-none focus:outline-none ">
-       <div className="relative w-auto my-4 mx-auto max-w-3xl">
+    <div className="relative inset-0 z-50 flex items-center justify-center overflow-y-auto outline-none focus:outline-none ">
+       <div className="relative w-auto max-w-3xl mx-auto my-4">
         {/*content*/}
-        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
           {/*header*/}
-          <div className="flex items-start justify-between p-3 border-b border-solid border-blueGray-200 rounded-t">
-            <h3 className="text-3xl font-sans">
+          <div className="flex items-start justify-between p-3 border-b border-solid rounded-t border-blueGray-200">
+            <h3 className="font-sans text-3xl">
               Edit Event
             </h3>
             <button
-              className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+              className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
             >
-              <span className="bg-transparent text-black font-sans h-6 w-6 text-2xl block outline-none focus:outline-none">
+              <span className="block w-6 h-6 font-sans text-2xl text-black bg-transparent outline-none focus:outline-none">
                 <Link href="/profile"> X</Link>
               </span>
             </button>
@@ -90,55 +115,55 @@ export default function Editevent(props) {
             {showAlert ? (
                   <div className="flex justify-center">
                     <div className={"flex flex-row justify-between items-center font-sans h-4 text-white px-6 py-6 border-0 rounded mt-4 mb-4 w-3/4 bg-black"}>
-                      <span className=" mr-8">
-                        <b className="capitalize py-2"> {iferror} </b>
+                      <span className="mr-8 ">
+                        <b className="py-2 capitalize"> {iferror} </b>
                       </span>
-                      <button className=" bg-transparent text-2xl text-white font-semibold leading-none  outline-none focus:outline-none" onClick={() => setShowAlert(false)}>
+                      <button className="text-2xl font-semibold leading-none text-white bg-transparent outline-none focus:outline-none" onClick={() => setShowAlert(false)}>
                         <span className="text-white">×</span>
                       </button>
                     </div>
                   </div>) : null}
           {/*body*/}
-          <div className="relative px-10 py-3 flex-auto">
-              <form className="text-blueGray-500 text-lg leading-relaxed" onSubmit={eventEditHandler}>
-              <h6 className="px-1 py-1  font-sans text-blueGray-600">
+          <div className="relative flex-auto px-10 py-3">
+              <form className="text-lg leading-relaxed text-blueGray-500" onSubmit={eventEditHandler}>
+              <h6 className="px-1 py-1 font-sans text-blueGray-600">
                   Title:</h6>
-                <input type="text" defaultValue={eventdata.title} name="title" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "/>
-                <h6 className="px-1 py-1  font-sans text-blueGray-600">
+                <input type="text" defaultValue={eventdata.title} name="title" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"/>
+                <h6 className="px-1 py-1 font-sans text-blueGray-600">
 
                 Images  (As URL):</h6>
                 <div className="flex-row ">
-                <input type="text" defaultValue={eventdata.image1}  name="image1" placeholder="Image URL" className="w-1/2 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring "/>
-                <input type="text" defaultValue={eventdata.image2}  name="image2" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "></input>
-                <input type="text" defaultValue={eventdata.image3}  name="image3" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "></input>
-                <input type="text" defaultValue={eventdata.image4}  name="image4" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image5}  name="image5" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image6}  name="image6" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image7}  name="image7" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image8}  name="image8" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image9}  name="image9" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image10} name="image10" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image11} name="image11" placeholder="Image URL" className="w-1/2 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring "/>
-                <input type="text" defaultValue={eventdata.image12} name="image12" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "></input>
-                <input type="text" defaultValue={eventdata.image13} name="image13" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "></input>
-                <input type="text" defaultValue={eventdata.image14} name="image14" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image15} name="image15" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image16} name="image16" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image17} name="image17" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image18} name="image18" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image19} name="image19" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                <input type="text" defaultValue={eventdata.image20} name="image20" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
+                <input type="text" defaultValue={eventdata.image1}  name="image1" placeholder="Image URL" className="relative w-1/2 px-3 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring "/>
+                <input type="text" defaultValue={eventdata.image2}  name="image2" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                <input type="text" defaultValue={eventdata.image3}  name="image3" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                <input type="text" defaultValue={eventdata.image4}  name="image4" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image5}  name="image5" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image6}  name="image6" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image7}  name="image7" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image8}  name="image8" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image9}  name="image9" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image10} name="image10" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image11} name="image11" placeholder="Image URL" className="relative w-1/2 px-3 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring "/>
+                <input type="text" defaultValue={eventdata.image12} name="image12" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                <input type="text" defaultValue={eventdata.image13} name="image13" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                <input type="text" defaultValue={eventdata.image14} name="image14" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image15} name="image15" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image16} name="image16" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image17} name="image17" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image18} name="image18" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image19} name="image19" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                <input type="text" defaultValue={eventdata.image20} name="image20" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
                 </div>
                 <input type="hidden"  defaultValue={eventdata.image} name="image"/>
                 <input type="hidden"  defaultValue={eventdata.user} name="id"/>
                 <input type="date" defaultValue={eventdata.date} name="date"/>
                 <h6 className="px-3 py-3 font-sans text-blueGray-600">
                 Discerption :</h6>
-                <input name="discerption" defaultValue={eventdata.discerption} type="text" placeholder="Discerption" className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+                <input name="discerption" defaultValue={eventdata.discerption} type="text" placeholder="Discerption" className="relative w-full px-3 py-3 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"/>
           
                 {/*footer*/}
-                <div className="flex items-center justify-center p-3 border-t border-solid border-blueGray-200 rounded-b">
-              <button className="bg-emerald-500 font-sans my-2 text-black bg-gray-200 active:bg-emerald-600 font-bold uppercase text-sm px-36 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150 hover:bg-black hover:text-white"
+                <div className="flex items-center justify-center p-3 border-t border-solid rounded-b border-blueGray-200">
+              <button className="py-3 my-2 mr-1 font-sans text-sm font-bold text-black uppercase transition-all duration-150 ease-linear bg-gray-200 rounded shadow outline-none bg-emerald-500 active:bg-emerald-600 px-36 hover:shadow-lg focus:outline-none hover:bg-black hover:text-white"
                 type="submit">
                 Edit Event 
               </button>
@@ -150,7 +175,7 @@ export default function Editevent(props) {
           </div>
         </div>
    </div>
-    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+    <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
   </div>
      
   

@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import logoPic from '../public/logo.png'
 import React from "react";
+
+
 export default function Header (props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
@@ -13,8 +15,8 @@ export default function Header (props) {
              <Image src={logoPic} alt="logo"  width={250} height={65} />
              </div>
 
-        <div className="w-full  flex flex-wrap items-center justify-center">
-          <div className="w-6/12 flex justify-evenly">
+        <div className="flex flex-wrap items-center justify-center w-full">
+          <div className="flex w-6/12 justify-evenly">
             <a
               className={
                 (props.transparent ? "text-white" : "text-gray-800") +
@@ -38,7 +40,7 @@ export default function Header (props) {
                 (props.transparent ? "text-white" : "text-gray-800") +
                 " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap "
               }
-              href="/Feed"
+              href="/feed"
             >
               Feed
             </a>
