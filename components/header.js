@@ -58,7 +58,7 @@ export default function Header (props) {
                 (props.transparent ? "text-white" : "text-gray-800") +
                 " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap"
               }
-              href="logout"
+              href=""
             >
               Logout
             </a>

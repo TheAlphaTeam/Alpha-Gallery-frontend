@@ -88,9 +88,6 @@ export default function LoginForm(props){
             <Head>
             <title>Alpha Gallery </title>
             </Head>
-
-            <header> </header>
-            {/* https://i.pinimg.com/originals/aa/46/93/aa4693c1130c17f0b729fd2f434f06f1.jpg */}
             <main style={{ backgroundImage: "url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center',backgroundSize: 'cover'}} className='flex items-center justify-center w-full h-screen'>
                 {!showForm && (
                    
@@ -208,8 +205,6 @@ export default function LoginForm(props){
                 )
                 }
         </main>
-
-        <footer></footer>
         </div>
 
     )   

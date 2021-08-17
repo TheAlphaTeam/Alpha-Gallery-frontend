@@ -4,7 +4,6 @@ import LoginForm from '../components/login'
 import HomePage  from "./home";
 
 
-
 const baseUrl= 'https://alphagallery.herokuapp.com/'
 const tokenUrl = baseUrl + 'api/token/'
 
@@ -13,40 +12,42 @@ export default function Home() {
   const [token, setToken] = useState('');
   const [credentials, setcredentials] = useState();
 
-async function getToken(credentials){
-  const fetchedToken = await axios.post( tokenUrl, credentials);
-  setToken(fetchedToken.data.access)
-}
-
-
-function loginHandler(credentials){
-    getToken(credentials)
-    console.log('fun',token)
-}
-
-
-useEffect(()=>{
-  if (!localStorage.getItem('token')){
-    localStorage.setItem('token',token)
-  }else{
-    setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
+  async function getToken(credentials){
+    const fetchedToken = await axios.post( tokenUrl, credentials);
+    setToken(fetchedToken.data.access)
   }
-},[token])
+
+
+  function loginHandler(credentials){
+      getToken(credentials)
+  }
 
 
 
-if (token || credentials){
-  return (
-    <HomePage/>
+  useEffect(()=>{
+    if (!localStorage.getItem('token')){
+      localStorage.setItem('token',token)
+    }else{
+      setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
+    }
+  },[token])
 
-  )
-}
-  
+
+
+  if (token || credentials){
+    return (
+      <HomePage/>
+    )
+  }
+    
   if (!credentials && !token){
     return(
   <LoginForm loginHandler={loginHandler}  token={token}/>
     )
   }
+
+
+
 }
 
 
