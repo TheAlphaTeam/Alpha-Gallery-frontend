@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import Load from "../components/loading"
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -77,7 +78,10 @@ export default function Feed(props) {
         </div>
     )
   } else {
-    return (<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif' />)
+    return (
+      <div className="pb-10 ">
+      <Load/>
+      </div> )
   }
 }
 
