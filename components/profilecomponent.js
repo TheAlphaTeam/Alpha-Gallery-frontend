@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import Load from "../components/loading"
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -632,12 +633,10 @@ export default function Profilecomponent(props) {
             "url('https://images.pexels.com/photos/21264/pexels-photo.jpg')"
           }}
         >
-          <span
-            id="blackOverlay"
-            className=" flex flex-row justify-center items-center w-full h-full absolute opacity-50 bg-black"
-          >
-          <img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>
-          </span>
+         
+          <div className="pb-10 ">
+          <Load/>
+          </div> 
         </div>
         <div
           className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"

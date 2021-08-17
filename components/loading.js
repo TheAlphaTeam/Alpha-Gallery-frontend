@@ -11,7 +11,3 @@ export default function Load() {
 }
 
 
-
-{/* <div className="pb-10 ">
-<Load/>
-</div> */}
