@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import Header from '../components/header';
 import Footer from '../components/footer';
+import Head from 'next/head';
 
 export default function About() {
 
@@ -10,7 +11,11 @@ export default function About() {
 
     return (
 
-        <div className="">
+        <>
+            <Head>
+        <title>Alpha Gallery - About </title>
+        <link rel="icon" href="/icon.ico" />
+            </Head>
             <Header/>
             <main>
             <div className="relative block " style={{ height: "300px" }}>
@@ -248,7 +253,7 @@ export default function About() {
             </div>
             </main>
             <Footer/>
-            </div>
+            </>
 
       
 

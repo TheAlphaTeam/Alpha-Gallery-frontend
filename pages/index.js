@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from 'react'
 import LoginForm from '../components/login'
 import HomePage  from "./home";
+import Head from 'next/head';
 
 
 
@@ -37,14 +38,22 @@ useEffect(()=>{
 
 if (token || credentials){
   return (
+    <>
     <HomePage/>
+    </>
 
   )
 }
   
   if (!credentials && !token){
     return(
+      <>
+      <head>
+        <title>Alpha Gallery - LOGIN/SIGNUP</title>
+        <link rel="icon" href="/icon.ico" />
+      </head>
   <LoginForm loginHandler={loginHandler}  token={token}/>
+     </>
     )
   }
 }
