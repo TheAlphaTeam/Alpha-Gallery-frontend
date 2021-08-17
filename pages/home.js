@@ -1,3 +1,4 @@
+
 import Header from '../components/header'
 import Slider from '../components/slider'
 import Event from '../components/events'
@@ -10,7 +11,11 @@ import React from 'react';
 export default function GalleryHome(props){
 
   return(
-    <div>  
+    <div> 
+       <Head>
+          <title>Alpha Gallery - Home</title>
+          <link rel="icon" href="/icon.ico" />
+        </Head> 
       <Header token={props.token}/>
       <main>
       <Slider slides={SliderData}/>
@@ -21,3 +26,4 @@ export default function GalleryHome(props){
     </div>
   );
 }
+

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from 'react'
 import LoginForm from '../components/login'
 import HomePage  from "./home";
+import Head from 'next/head';
 
 
 const baseUrl= 'https://alphagallery.herokuapp.com/'
@@ -33,16 +34,24 @@ export default function Home() {
   },[token])
 
 
+if (token || credentials){
+  return (
+    <>
+    <HomePage/>
+    </>
 
-  if (token || credentials){
-    return (
-      <HomePage/>
     )
   }
     
-  if (!credentials && !token){
+    if (!credentials && !token){
     return(
-  <LoginForm loginHandler={loginHandler}  token={token}/>
+      <>
+      <head>
+        <title>Alpha Gallery - LOGIN/SIGNUP</title>
+        <link rel="icon" href="/icon.ico" />
+      </head>
+      <LoginForm loginHandler={loginHandler}  token={token}/>
+     </>
     )
   }
 
