@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import Load from "./loading"
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -14,7 +15,7 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Link from 'next/link'
 
 import Header from "./header.js";
-import Navbar from "./Navbar.js";
+import Navbar from "./navBar.js";
 import Footer from "./footer.js";
 import { getDomainLocale } from "next/dist/shared/lib/router/router";
 import { data } from "autoprefixer";
@@ -42,7 +43,6 @@ export default function Profilecomponent(props) {
   const [postdata, setPostdata] = React.useState([]);
   const [eventdata, setEventdata] = React.useState();
   const [token, setToken] = React.useState('');
-  const [refreshToken, setRefreshToken] = React.useState('');
   const [showModal1, setShowModal1] = React.useState(false);
   const [showModal2, setShowModal2] = React.useState(false);
   const [moreimades, setmoreimages] = React.useState(false);
@@ -52,13 +52,14 @@ export default function Profilecomponent(props) {
   const [numberofposts, setnumberofposts ] = React.useState(0);
   const [numberofevents, setnumberofevents ] = React.useState(0);
   const [iferror, setIfError ] = React.useState(''); 
-  const [credentials, setcredentials] = React.useState({username:'alpha', password:'alpha'});
+  const [credentials, setcredentials] = React.useState();
   
   async function getToken(credentials){
     const fetchedToken = await axios.post(tokenUrl, credentials);
     setToken(fetchedToken.data.access);
-    setRefreshToken(fetchedToken.data.refresh);
   }
+
+  
   async function getUserData(){
       const config = {headers: {'Authorization': 'Bearer ' + token }};
       const udata = await axios.get(currentUrl, config);
@@ -123,6 +124,21 @@ export default function Profilecomponent(props) {
     }
   }
 
+  async function postDeleteRequset(id){
+    const config = {headers: {'Authorization': 'Bearer ' + token}};
+    const response = await axios.delete(`https://alphagallery.herokuapp.com/api/v1/a-gallery/posts/${id}/`, config);
+    console.log(response)
+    if (response.status == 204){
+      setShowModal2(false);
+      setIfError('Deleted Successfully')
+      setShowAlert(true)
+      getPostData();
+    }else{
+      setShowModal2(false);
+      setIfError(response.status)
+      setShowAlert(true)
+    }
+  }
   function postsubmitHandler(event){
     event.preventDefault();
     const post ={
@@ -180,20 +196,33 @@ export default function Profilecomponent(props) {
     eventDeleteRequset(id);
     getEventsData()
   }
-  React.useEffect( async () => {
-    
-    await getToken(credentials);
-    
-    
+  function deletepostHandler(event){
+    event.preventDefault();
+    const id = parseInt(event.target.id.value);
+    postDeleteRequset(id);
+    getPostData()
+  }
+
+  React.useEffect(() => {
+    setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
   }, []);
-    
+  
+
   React.useEffect( async () => {
-      if (token){
-        await getUserData();
-        await getPostData();
-        await getEventsData();
-      }
-    }, [token]);
+    if(credentials){
+      await getToken(credentials);
+    }
+  }, [credentials]);
+
+  
+  React.useEffect( async () => {
+    if (token){
+      await getUserData();
+      await getPostData();
+      await getEventsData();
+    } 
+  }, [token]);
+
 
   const classes = useStyles();
   var counter2= 0
@@ -229,12 +258,12 @@ export default function Profilecomponent(props) {
           >
             <span
               id="blackOverlay"
-              className="w-full h-full absolute opacity-50 bg-black"
+              className="absolute w-full h-full bg-black opacity-50"
             ></span>
             
           </div>
           <div
-            className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
+            className="absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden pointer-events-none"
             style={{ height: "70px" }}
           >
             <svg
@@ -254,29 +283,29 @@ export default function Profilecomponent(props) {
           </div>
         </section>
         <section className="relative py-16 bg-gray-300">
-          <div className="container mx-auto px-4">
-            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+          <div className="container px-4 mx-auto">
+            <div className="relative flex flex-col w-full min-w-0 mb-6 -mt-64 break-words bg-white rounded-lg shadow-xl">
               <div className="px-6">
                 <div className="flex flex-wrap justify-center">
-                  <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+                  <div className="flex justify-center w-full px-4 lg:w-3/12 lg:order-2">
                     <div className="relative">
                       <img
                         alt="..."
                         src={userdata.profile.photo}
-                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-18"
+                        className="absolute h-auto -m-16 -ml-20 align-middle border-none rounded-full shadow-xl lg:-ml-18"
                         style={{ maxWidth: "200px" }}
                       />
                     </div>
                   </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                    <div className="py-6 px-3 mt-32 sm:mt-0">
+                  <div className="w-full px-4 lg:w-4/12 lg:order-3 lg:text-right lg:self-center">
+                    <div className="px-3 py-6 mt-32 sm:mt-0">
                       <button
-                        className="bg-gray-700 font-sans active:bg-gray-900 hover:bg-gray-500 uppercase text-white font-bold hover:shadow-lg shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 "
+                        className="px-4 py-2 mb-1 font-sans text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-gray-900 hover:bg-gray-500 hover:shadow-lg focus:outline-none sm:mr-2 "
                         type="button" style={{ transition: "all .15s ease" }} onClick={() => setShowModal1(true)}>
                         Post  ➕ 
                       </button>
                       <button
-                        className="bg-gray-700 font-sans active:bg-gray-900 hover:bg-gray-500 uppercase text-white font-bold hover:shadow-lg shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 "
+                        className="px-4 py-2 mb-1 font-sans text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-gray-900 hover:bg-gray-500 hover:shadow-lg focus:outline-none sm:mr-2 "
                         type="button"
                         style={{ transition: "all .15s ease" }}
                         onClick={() => setShowModal2(true)}>
@@ -284,16 +313,16 @@ export default function Profilecomponent(props) {
                       </button>
                     </div>
                   </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                    <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                      <div className="mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
+                  <div className="w-full px-4 lg:w-4/12 lg:order-1">
+                    <div className="flex justify-center py-4 pt-8 lg:pt-4">
+                      <div className="p-3 mr-4 text-center">
+                        <span className="block text-xl font-bold tracking-wide text-gray-700 uppercase">
                           {counter1}
                         </span>
-                        <span className="text-sm font-sans text-gray-500">Posts</span>
+                        <span className="font-sans text-sm text-gray-500">Posts</span>
                       </div>
-                      <div className="mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-gray-700">
+                      <div className="p-3 mr-4 text-center">
+                        <span className="block text-xl font-bold tracking-wide text-gray-700 uppercase">
                           {counter2}
                         </span>
                         <span className="text-sm text-gray-500">Events</span>
@@ -304,24 +333,24 @@ export default function Profilecomponent(props) {
                 {showAlert ? (
                   <div className="flex justify-center">
                     <div className={"flex flex-row justify-between items-center font-sans h-9 text-white px-6 py-6 border-0 rounded mt-24 mb-4 w-3/4 bg-gray-800"}>
-                      <span className=" mr-8">
-                        <b className="capitalize py-2"> {iferror} </b>
+                      <span className="mr-8 ">
+                        <b className="py-2 capitalize"> {iferror} </b>
                       </span>
-                      <button className=" bg-transparent text-2xl text-white font-semibold leading-none  outline-none focus:outline-none" onClick={() => setShowAlert(false)}>
+                      <button className="text-2xl font-semibold leading-none text-white bg-transparent outline-none focus:outline-none" onClick={() => setShowAlert(false)}>
                         <span className="text-white">×</span>
                       </button>
                     </div>
                   </div>) : null}
-                <div className="text-center mt-12">
-                  <h3 className="text-4xl font-sans font-bold leading-normal  text-gray-800 mb-2">
+                <div className="mt-12 text-center">
+                  <h3 className="mb-2 font-sans text-4xl font-bold leading-normal text-gray-800">
                     {userdata.first_name} {userdata.last_name}
                   </h3>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
+                  <div className="mt-0 mb-2 text-sm font-bold leading-normal text-gray-500 uppercase">
+                    <i className="mr-2 text-lg text-gray-500 fas fa-map-marker-alt"></i>{" "}
                       {userdata.profile.city}
                   </div>
                   <div className="flex flex-wrap justify-center mt-5 ">
-                    <div className="w-full lg:w-9/12 px-4">
+                    <div className="w-full px-4 lg:w-9/12">
                       <p className="mb-4 text-lg leading-relaxed text-gray-800">
                         {userdata.profile.bio}
                       </p>
@@ -329,19 +358,21 @@ export default function Profilecomponent(props) {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-row mt-10 py-10 border-t border-gray-300 ">
-                <div className="flex flex-col flex-wrap justify-center border-r border-gray-300 px-5 w-1/3 items-center" > 
-                  <div className="font-bold font-sans text-lg mb-5">
+                <div className="flex flex-row py-10 mt-10 border-t border-gray-300 ">
+                <div className="flex flex-col flex-wrap items-center justify-center w-1/3 px-5 border-r border-gray-300" > 
+                  <div className="mb-5 font-sans text-lg font-bold">
                       <h3>My Events</h3>
                   </div>
                   {  
                      eventdata.data.map(item => {
                        if(item.username == userdata.username){
                          return(
-                             <div className="mb-5 pr-5" id={item.id}>  
+                             <div className="pr-5 mb-5" id={item.id}>  
                             <Card className={classes.root}>
                             <CardActionArea>
+                            <Link href="https://projects.benstevens.uk/gallery3d/">
                               <CardMedia className={classes.media} image={item.image1}/>
+                              </Link>
                               <CardContent>
                                 <Typography gutterBottom variant="h6" component="h2" size="small">
                                   {item.title} || {item.date}
@@ -355,7 +386,7 @@ export default function Profilecomponent(props) {
                             <CardActions>
                               <div className="flex flex-row justify-end w-full mb-2">  
                              
-                            <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                            <button className="px-4 py-2 mb-3 ml-3 text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
                             type="button"
                              style={{ transition: "all .15s ease" }}
                             >
@@ -364,7 +395,7 @@ export default function Profilecomponent(props) {
                             
                             <form onSubmit={deleteventHandler}>
                              <input type="hidden" name="id" value={item.id}/> 
-                            <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                            <button className="px-4 py-2 mb-3 ml-3 text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
                             type="submit" style={{ transition: "all .15s ease" }}>
                             Delete
                             </button>
@@ -380,24 +411,24 @@ export default function Profilecomponent(props) {
                   }
                  
                   </div>
-                  <div className="flex flex-col flex-wrap border-gray-300 px-5 w-2/3 items-center " > 
-                     <div className="font-bold font-sans text-lg mb-0"> <h3>My Posts</h3></div>
+                  <div className="flex flex-col flex-wrap items-center w-2/3 px-5 border-gray-300 " > 
+                     <div className="mb-0 font-sans text-lg font-bold"> <h3>My Posts</h3></div>
                      {
             postdata.data.map(item => {
               if (item.username== userdata.username){
                 return (
-                  <div className="flex flex-col justify-center bg-white border font-sans shadow-lg border-gray-500 rounded-md  w-full h-auto my-5 ">
+                  <div className="flex flex-col justify-center w-full h-auto my-5 font-sans bg-white border border-gray-500 rounded-md shadow-lg ">
                     
-                  <div className="flex flex-row w-full">
-                    <img className="w-20 h-20 rounded-full m-5"src={item.image}/>
-                    <div className="flex flex-col mt-8 justify-start items-baseline"> 
-                    <h6 className="font-bold text-lg">@{item.username}</h6>
+                  <div className="flex flex-row items-center w-full">
+                    <img className="w-20 h-20 m-5 rounded-full"src={item.image}/>
+                    <div className="flex flex-col items-baseline justify-start mt-8"> 
+                    <h6 className="text-lg font-bold">@{item.username}</h6>
                     <p className="text-sm">{item.created_at.slice(2, 10)}</p>
                     {/* <p>{item.created_at.slice(11, 16)}</p>  */}
                     </div>
                     <div className="flex flex-row justify-end w-full mb-2">  
                              <div>
-                             <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                             <button className="px-4 py-2 mb-3 ml-3 text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
                              type="button"
                               style={{ transition: "all .15s ease" }}
                              >
@@ -405,9 +436,9 @@ export default function Profilecomponent(props) {
                              </button>
                              </div>
                              
-                             <form onSubmit={deleteventHandler}>
+                             <form onSubmit={deletepostHandler}>
                               <input type="hidden" name="id" value={item.id}/> 
-                             <button className=" bg-gray-700 text-white active:bg-black text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 hover:bg-gray-500"
+                             <button className="px-4 py-2 mb-3 ml-3 text-xs font-bold text-white uppercase bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
                              type="submit" style={{ transition: "all .15s ease" }}>
                              Delete
                              </button>
@@ -415,16 +446,16 @@ export default function Profilecomponent(props) {
                              </div>
                   </div>
                     <p className=" m-3.5 flex-auto flex-end text-s">{item.discerption}</p>
-                  <div className="h-96 w-10/12 mx-auto">
+                  <div className="w-10/12 mx-auto h-96">
                   <img className="w-full h-full " src={item.image1}/>
                  </div>
-                  <div className="flex flex-row  ml-10">
+                  <div className="flex flex-row ml-10">
                     <form className="w-full">
-                    <FormControlLabel className="w-30 h-20"
+                    <FormControlLabel className="h-20 w-30"
                     control={<Checkbox icon={<FavoriteBorder />} 
                     checkedIcon={<Favorite />} name="like"  />} label={item.likes}/>
                     <input className=" px-3 py-1.5 placeholder-blueGray-300 text-blueGray-600 w-8/12 relative bg-gray-200 rounded text-s border-0 shadow outline-none focus:outline-none focus:ring "type='text' name='comment'/>
-                    <button className="px-4 py-2 mb-3 ml-3 text-s font-bold text-white bg-gray-700 rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
+                    <button className="px-4 py-2 mb-3 ml-3 font-bold text-white bg-gray-700 rounded shadow outline-none text-s active:bg-black hover:shadow-md focus:outline-none lg:mr-1 lg:mb-0 hover:bg-gray-500"
                             type="button"
                             style={{ transition: "all .15s ease" }}
                             >
@@ -450,52 +481,52 @@ export default function Profilecomponent(props) {
         </section>
           {showModal1 ? (
             <>
-              <div className="justify-center items-center flex overflow-x-hidden  overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
-                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none ">
+                <div className="relative w-auto max-w-3xl mx-auto my-6">
                   {/*content*/}
-                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
                     {/*header*/}
-                    <div className="flex font-sans items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                    <div className="flex items-start justify-between p-5 font-sans border-b border-solid rounded-t border-blueGray-200">
                       <h3 className="text-3xl font-semibold">
                         Add a Post
                       </h3>
                       <button
-                        className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                        className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
                         onClick={() => {setShowModal1(false);
                                         setmoreimages(false);}}
                       >
-                        <span className="bg-transparent text-black  h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        <span className="block w-6 h-6 text-2xl text-black bg-transparent outline-none focus:outline-none">
                           X
                         </span>
                       </button>
                     </div>
                     {/*body*/}
-                    <div className="relative px-10 py-3 flex-auto">
+                    <div className="relative flex-auto px-10 py-3">
                       <div className="flex justify-end">
                         <button
-                          className="justify-end text-black-300 background-transparent font-bold uppercase px-6 py-2 text-sm   duration-150 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all"
+                          className="justify-end px-6 py-2 mb-1 mr-1 text-sm font-bold uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-black-300 background-transparent hover:shadow-lg focus:outline-none"
                           
                           onClick={() => setmoreimages(true)}
                         >
                         Add Collection
                         </button>
                         </div>
-                        <form className="text-blueGray-500 text-lg leading-relaxed" onSubmit={postsubmitHandler} >
-                        <h6 className="px-3 py-3  text-blueGray-600">
+                        <form className="text-lg leading-relaxed text-blueGray-500" onSubmit={postsubmitHandler} >
+                        <h6 className="px-3 py-3 text-blueGray-600">
                           Image (As URL):</h6>
-                          <input type="url" name="image1" placeholder="Image URL" required className="my-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+                          <input type="url" name="image1" placeholder="Image URL" required className="relative w-full px-3 py-3 my-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"/>
                           {moreimades?(<div>
                             <button
-                          className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                          className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
                           onClick={() => setmoreimages(false)}
                         >
-                          <span className="bg-transparent text-black  h-6 w-6 text-2xl block outline-none focus:outline-none">
+                          <span className="block w-6 h-6 text-2xl text-black bg-transparent outline-none focus:outline-none">
                             x
                           </span>
                         </button>
-                          <input type="text"  name="image2" placeholder="Image URL" className="my-1 px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"></input>
-                          <input type="text"  name="image3" placeholder="Image URL" className="my-1 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"></input>
-                          <input type="text"  name="image4"placeholder="Image URL" className="my-1 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"></input> 
+                          <input type="text"  name="image2" placeholder="Image URL" className="relative w-full px-2 py-1 my-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                          <input type="text"  name="image3" placeholder="Image URL" className="relative w-full px-2 py-2 my-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                          <input type="text"  name="image4"placeholder="Image URL" className="relative w-full px-2 py-2 my-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
                           </div>):(<>
                           <input type="hidden"  value='' name="image2"/>
                           <input type="hidden"  value='' name="image3"/>
@@ -506,11 +537,11 @@ export default function Profilecomponent(props) {
                           <input type="hidden"  value={userdata.profile.photo} name="image"/>
                           <h6 className="px-3 py-3 text-blueGray-600">
                           Discerption :</h6>
-                          <input name="discerption" type="text" placeholder="Discerption" className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+                          <input name="discerption" type="text" placeholder="Discerption" className="relative w-full px-3 py-3 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"/>
                     
                           {/*footer*/}
-                          <div className="flex items-center justify-center p-3 border-t border-solid border-blueGray-200 rounded-b">
-                        <button className="bg-emerald-500  my-2 text-black bg-gray-200 active:bg-emerald-600 font-bold uppercase text-sm px-36 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150 hover:bg-gray-800 hover:text-white"
+                          <div className="flex items-center justify-center p-3 border-t border-solid rounded-b border-blueGray-200">
+                        <button className="py-3 my-2 mr-1 text-sm font-bold text-black uppercase transition-all duration-150 ease-linear bg-gray-200 rounded shadow outline-none bg-emerald-500 active:bg-emerald-600 px-36 hover:shadow-lg focus:outline-none hover:bg-gray-800 hover:text-white"
                           type="submit">
                           Post
                         </button>
@@ -522,61 +553,61 @@ export default function Profilecomponent(props) {
                     </div>
                   </div>
              </div>
-              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+              <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
             </>
       ) : null}
       {showModal2 ? (
         <div><>
-        <div className="justify-center items-center flex overflow-y-auto fixed  inset-0 z-50 outline-none focus:outline-none ">
-          <div className="relative w-auto my-6 mx-auto max-w-3xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto outline-none focus:outline-none ">
+          <div className="relative w-auto max-w-3xl mx-auto my-6">
             {/*content*/}
-            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
               {/*header*/}
-              <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                <h3 className="text-3xl font-sans">
+              <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
+                <h3 className="font-sans text-3xl">
                   Add a Event
                 </h3>
                 <button
-                  className="p-1 ml-auto bg-transparent border-0 text-black  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none focus:outline-none"
                   onClick={() => {setShowModal2(false);}}
                 >
-                  <span className="bg-transparent text-black font-sans h-6 w-6 text-2xl block outline-none focus:outline-none">
+                  <span className="block w-6 h-6 font-sans text-2xl text-black bg-transparent outline-none focus:outline-none">
                     X
                   </span>
                 </button>
               </div>
               {/*body*/}
-              <div className="relative px-10 py-3 flex-auto">
-                  <form className="text-blueGray-500 text-lg leading-relaxed" onSubmit={eventSubmitHandler} >
-                  <h6 className="px-1 py-1  font-sans text-blueGray-600">
+              <div className="relative flex-auto px-10 py-3">
+                  <form className="text-lg leading-relaxed text-blueGray-500" onSubmit={eventSubmitHandler} >
+                  <h6 className="px-1 py-1 font-sans text-blueGray-600">
                       
                       Title:</h6>
-                    <input type="text"  name="title" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "/>
-                    <h6 className="px-1 py-1  font-sans text-blueGray-600">
+                    <input type="text"  name="title" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"/>
+                    <h6 className="px-1 py-1 font-sans text-blueGray-600">
 
                     Images  (As URL):</h6>
                     <div className="flex-row ">
-                    <input type="url"  name="image1" placeholder="Image URL" required className="w-1/2 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring "/>
-                    <input type="url"  name="image2" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "></input>
-                    <input type="url"  name="image3" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2 "></input>
-                    <input type="url"  name="image4" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                    <input type="url"  name="image5" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                    <input type="url"  name="image6" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                    <input type="url"  name="image7" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                    <input type="url"  name="image8" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                    <input type="url"  name="image9" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
-                    <input type="url"  name="image10" placeholder="Image URL" className=" px-2 py-1 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-1/2"></input> 
+                    <input type="url"  name="image1" placeholder="Image URL" required className="relative w-1/2 px-3 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring "/>
+                    <input type="url"  name="image2" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                    <input type="url"  name="image3" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input>
+                    <input type="url"  name="image4" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                    <input type="url"  name="image5" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                    <input type="url"  name="image6" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                    <input type="url"  name="image7" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                    <input type="url"  name="image8" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                    <input type="url"  name="image9" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
+                    <input type="url"  name="image10" placeholder="Image URL" className="relative w-1/2 px-2 py-1 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"></input> 
                     </div>
                     <input type="hidden"  value={userdata.profile.photo} name="image"/>
                     <input type="hidden"  value={userdata.id} name="id"/>
                     <input type="date"  name="date"/>
                     <h6 className="px-3 py-3 font-sans text-blueGray-600">
                     Discerption :</h6>
-                    <input name="discerption" type="text" placeholder="Discerption" className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+                    <input name="discerption" type="text" placeholder="Discerption" className="relative w-full px-3 py-3 text-sm bg-white border-0 rounded shadow outline-none placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"/>
               
                     {/*footer*/}
-                    <div className="flex items-center justify-center p-3 border-t border-solid border-blueGray-200 rounded-b">
-                  <button className="bg-emerald-500 font-sans my-2 text-black bg-gray-200 active:bg-emerald-600 font-bold uppercase text-sm px-36 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1  ease-linear transition-all duration-150 hover:bg-gray-800 hover:text-white"
+                    <div className="flex items-center justify-center p-3 border-t border-solid rounded-b border-blueGray-200">
+                  <button className="py-3 my-2 mr-1 font-sans text-sm font-bold text-black uppercase transition-all duration-150 ease-linear bg-gray-200 rounded shadow outline-none bg-emerald-500 active:bg-emerald-600 px-36 hover:shadow-lg focus:outline-none hover:bg-gray-800 hover:text-white"
                     type="submit">
                     Add Event 
                   </button>
@@ -588,7 +619,7 @@ export default function Profilecomponent(props) {
               </div>
             </div>
        </div>
-        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
       </></div>
       ) : null}
       </main>
@@ -609,15 +640,13 @@ export default function Profilecomponent(props) {
             "url('https://images.pexels.com/photos/21264/pexels-photo.jpg')"
           }}
         >
-          <span
-            id="blackOverlay"
-            className=" flex flex-row justify-center items-center w-full h-full absolute opacity-50 bg-black"
-          >
-          <img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>
-          </span>
+         
+          <div className="pb-10 ">
+          <Load/>
+          </div> 
         </div>
         <div
-          className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
+          className="absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden pointer-events-none"
           style={{ height: "70px" }}
         >
           <svg

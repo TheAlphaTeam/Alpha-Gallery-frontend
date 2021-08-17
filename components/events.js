@@ -1,4 +1,5 @@
 import React from 'react';
+import Load from "../components/loading"
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -23,26 +24,42 @@ const useStyles = makeStyles({
 
 export default function Event(props){
     const [eventdata, setEventdata] = React.useState([]);
+    const [token, setToken] = React.useState('');
+    const [credentials, setcredentials] = React.useState();
+  
 
+    async function getToken(credentials){
+      const fetchedToken = await axios.post(tokenUrl, credentials);
+      setToken(fetchedToken.data.access);
+    }
 
     
     async function getEventsData(){
-        const config = {headers: {'Authorization': 'Bearer ' + props.storedToken}};
+      console.log(token,'     e')
+        const config = {headers: {'Authorization': 'Bearer ' + token}};
         console.log(config)
         const edata = await axios.get(eventsUrl, config);
         setEventdata(edata);
         console.log(edata);
     }
     
+    React.useEffect(() => {
+      setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
+    }, []);
     
+    React.useEffect( async () => {
+      if(credentials){
+        await getToken(credentials);
+      }
+    }, [credentials]);
+  
+    React.useEffect( async () => {
+      console.log(token,'     e')
+      if (token){
+        await  getEventsData();
+      } 
+    }, [token]);
     
-    React.useEffect( async() => {
-      console.log(props)
-        if (props.storedToken){
-            await getEventsData();
-            
-        }
-    }, [props.storedToken]);
     
     const classes = useStyles();
     if (eventdata.data){
@@ -50,7 +67,7 @@ export default function Event(props){
             <>
             <div style={{ backgroundImage: `url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')` }}> 
 
-            <h1 className="text-4xl font-bold text-center pt-20 pb-5 font-sans">Events</h1>
+            <h1 className="pt-20 pb-5 font-sans text-4xl font-bold text-center">Events</h1>
 
 
                                      
@@ -112,7 +129,10 @@ export default function Event(props){
     </>
               )
               }else{
-                  return(<img src='https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif'/>)
+                  return(
+                    <div className="pb-10 ">
+                    <Load/>
+                    </div> )
                 }
     
 }
