@@ -5,8 +5,10 @@ import Event from './events'
 import {SliderData} from '../components/sliderData';
 import News from './news'
 import Footer from './footer'
-
+import React from 'react';
+import axios from 'axios';
 export default function GalleryHome(props){
+
     return(
       <div>  
        <main>
