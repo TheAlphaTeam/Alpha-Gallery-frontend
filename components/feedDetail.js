@@ -54,9 +54,11 @@ export default function FeedDetail(props) {
     return (
       <div className="flex flex-col w-full lg:max-w-full lg:flex"style={{ backgroundImage: `url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover' }} >
 
+
         {
           postdata.data.map(item => {
             return (
+              <>
               <div className="flex flex-col justify-center w-8/12 mx-auto my-24 font-sans bg-white border border-gray-500 rounded-md shadow-lg h-2/4 ">
                 <div className="flex flex-row w-full">
                   <img className="w-20 h-20 m-5 rounded-full"src={item.image}/>
@@ -84,6 +86,7 @@ export default function FeedDetail(props) {
                   </form> 
                 </div>
               </div>
+        </>
               )
           })
         }
@@ -92,10 +95,10 @@ export default function FeedDetail(props) {
   } else {
     return (
       <div className="pb-10 ">
-        <Load/>
+      <Load/>
       </div> )
+    }
   }
-}
 
 
 

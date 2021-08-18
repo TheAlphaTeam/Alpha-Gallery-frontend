@@ -9,10 +9,7 @@ export const SliderData = [
     },
     {
       image:
-        ''
+        'https://static.standard.co.uk/s3fs-public/thumbnails/image/2018/01/24/13/haywardgallery2401k.jpg?width=1368&height=600'
     },
-    {
-      image:
-        ''
-    }
+  
   ];

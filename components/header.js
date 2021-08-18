@@ -20,7 +20,7 @@ export default function Header (props) {
             <a
               className={
                 (props.transparent ? "text-white" : "text-gray-800") +
-                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap "
+                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap hover:text-black"
               }
               href="/"
             >
@@ -29,7 +29,7 @@ export default function Header (props) {
             <a
               className={
                 (props.transparent ? "text-white" : "text-gray-800") +
-                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap"
+                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap hover:text-black"
               }
               href="/profile"
             >
@@ -38,7 +38,7 @@ export default function Header (props) {
             <a
               className={
                 (props.transparent ? "text-white" : "text-gray-800") +
-                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap "
+                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap hover:text-black"
               }
               href="/feed"
             >
@@ -47,7 +47,7 @@ export default function Header (props) {
             <a
               className={
                 (props.transparent ? "text-white" : "text-gray-800") +
-                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap"
+                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap hover:text-black"
               }
               href="/about"
             >
@@ -56,7 +56,7 @@ export default function Header (props) {
             <a
               className={
                 (props.transparent ? "text-white" : "text-gray-800") +
-                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap"
+                " text-lg font-bold font-sans leading-relaxed inline-block mr-4 py-2 whitespace-nowrap hover:text-black"
               }
               href='/logout'
             >
@@ -79,6 +79,8 @@ export default function Header (props) {
           </div>
         </div>
       </nav>
+
+      <hr className="shadow-md mb-0"/>
     </>
   );
 }
