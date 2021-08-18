@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import LoginForm from '../components/login'
 import HomePage  from "./home";
 import Head from 'next/head';
-
+import { useRouter } from 'next/router';
 
 
 const baseUrl= 'https://alphagallery.herokuapp.com/'
@@ -13,28 +13,32 @@ export default function Home() {
 
   const [token, setToken] = useState('');
   const [credentials, setcredentials] = useState();
+  const router = useRouter()
 
-async function getToken(credentials){
-  const fetchedToken = await axios.post( tokenUrl, credentials);
-  setToken(fetchedToken.data.access)
-}
-
-
-function loginHandler(credentials){
-    getToken(credentials)
-    console.log('fun',token)
-}
-
-
-useEffect(()=>{
-  if (!localStorage.getItem('token')){
-    localStorage.setItem('token',token)
-  }else{
-    setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
+  async function getToken(credentials){
+    const fetchedToken = await axios.post( tokenUrl, credentials);
+    setToken(fetchedToken.data.access)
   }
-},[token])
 
 
+  function loginHandler(credentials){
+      getToken(credentials)
+  }
+
+
+
+  useEffect(()=>{
+    if (!localStorage.getItem('token')){
+      localStorage.setItem('token',token)
+    }else{
+      setcredentials({username:localStorage.getItem('username'), password:localStorage.getItem('password')})
+    }
+  },[token])
+
+
+  
+   
+    
 
 if (token || credentials){
   return (
@@ -42,20 +46,23 @@ if (token || credentials){
     <HomePage/>
     </>
 
-  )
-}
-  
-  if (!credentials && !token){
+    )
+  }
+    
+    if (!credentials && !token){
     return(
       <>
-      <head>
+      <Head>
         <title>Alpha Gallery - LOGIN/SIGNUP</title>
         <link rel="icon" href="/icon.ico" />
-      </head>
-  <LoginForm loginHandler={loginHandler}  token={token}/>
+      </Head>
+      <LoginForm loginHandler={loginHandler}  token={token}/>
      </>
     )
   }
+
+
+
 }
 
 

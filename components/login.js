@@ -207,8 +207,6 @@ export default function LoginForm(props){
                 )
                 }
         </main>
-
-        <footer></footer>
         </div>
 
     )   
