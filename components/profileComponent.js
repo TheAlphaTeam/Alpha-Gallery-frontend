@@ -359,7 +359,7 @@ export default function Profilecomponent(props) {
                   </div>
                 </div>
                 <div className="flex flex-row py-10 mt-10 border-t border-gray-300 ">
-                <div className="flex flex-col flex-wrap items-center justify-center w-1/3 px-5 border-r border-gray-300" > 
+                <div className="flex flex-col flex-wrap items-center justify-start w-1/3 px-5 border-r border-gray-300" > 
                   <div className="mb-5 font-sans text-lg font-bold">
                       <h3>My Events</h3>
                   </div>
@@ -413,7 +413,7 @@ export default function Profilecomponent(props) {
                   }
                  
                   </div>
-                  <div className="flex flex-col flex-wrap items-center w-2/3 px-5 border-gray-300 " > 
+                  <div className="flex flex-col flex-wrap items-center justify-start w-2/3 px-5 border-gray-300 " > 
                      <div className="mb-0 font-sans text-lg font-bold"> <h3>My Posts</h3></div>
                      {
             postdata.data.map(item => {
