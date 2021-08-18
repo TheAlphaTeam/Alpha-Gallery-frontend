@@ -11,11 +11,11 @@ export default function View() {
   const [token, setToken] = React.useState('');
   const [credentials, setcredentials] = React.useState({username:'alpha', password:'alpha'});
   const [eventdata, setEventdata] = React.useState();
-  const router = useRouter()
+  const router = useRouter();
 
   async function getToken(credentials){
     const fetchedToken = await axios.post(`https://alphagallery.herokuapp.com/api/token/`, credentials);
-    setToken(fetchedToken.data.access)
+    setToken(fetchedToken.data.access);
   }
 
   async function getEventsData(id){
