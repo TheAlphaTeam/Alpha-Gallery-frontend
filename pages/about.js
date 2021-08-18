@@ -18,17 +18,20 @@ export default function About() {
             </Head>
             <Header/>
             <main>
-                    <h3 className="font-sans text-xl font-bold absolute   capitalize align-middle text-justify">
-
-alpha gallery it's gallery  to show A virtualgallery
-that presentingcollection of<br></br> artworks, information
-about exhibitions,Artest. Providinga platform for artists
-to present their works since it becomes hard while current
-conditions caused by the pandemic. </h3>
             <div className="relative block " style={{ height: "300px" }}>
 
                 <div className="absolute top-0 items-center w-full h-full text-3xl font-extrabold text-center" style={{ backgroundImage: `url('http://res2.weblium.site/res/5c1cd98f2914810022558981/5c223adfbd2020002629619e_optimized_1920')`, backgroundRepeat: 'repeat', backgroundPosition: 'center', backgroundSize: 'cover' }} >
                     <div className="absolute z-0 w-full h-full bg-black opacity-50">
+                    </div>
+                    <div  className=" bg-white opacity-50 "> 
+                    <h3 className="font-sans text-lg font-bold capitalize align-middle items-center m-28">
+
+                            alpha gallery it's gallery  to show A virtualgallery
+                            that presentingcollection of<br></br> artworks, information
+                            about exhibitions,Artest. Providinga platform for artists
+                            to present their works since it becomes hard while current
+                            conditions caused by the pandemic.
+                    </h3>
                     </div>
                 </div>
             </div>
@@ -38,15 +41,15 @@ conditions caused by the pandemic. </h3>
            <hr className="text-xl font-bold text-gray-900"/>
            <hr/>
           
-                <div className="flex flex-row flex-wrap items-center justify-center pt-10">
+                <div className="flex flex-row flex-wrap items-center justify-center pt-10 ">
                     <div className="flex flex-col items-center justify-center p-1 h-96 w-96 ">
-                        <div className="inline-flex overflow-hidden rounded-full shadow-lg h-60 w-60">
+                        <div className="inline-flex overflow-hidden rounded-full shadow-lg h-60 w-60 ">
                             <img src="https://avatars.githubusercontent.com/u/55560502?v=4"
                                 alt=""
                                 className="w-full h-full" />
                         </div>
 
-                        <h2 className="mt-4 text-xl font-bold">Basel Atalla </h2>
+                        <h2 className="mt-4 text-xl font-bold animate-bounce">Basel Atalla </h2>
 
 
                         <h6 >Full Stack Developer</h6>
@@ -81,7 +84,7 @@ conditions caused by the pandemic. </h3>
                                 className="w-full h-full" />
                         </div>
 
-                        <h2 className="mt-4 text-xl font-bold">Sewar Maqableh</h2>
+                        <h2 className="mt-4 text-xl font-bold  animate-bounce">Sewar Maqableh</h2>
 
 
 
@@ -117,7 +120,7 @@ conditions caused by the pandemic. </h3>
                                 className="w-full h-full" />
                         </div>
 
-                        <h2 className="mt-4 text-xl font-bold">Bayan Alkatib </h2>
+                        <h2 className="mt-4 text-xl font-bold  animate-bounce">Bayan Alkatib </h2>
 
 
                         <h6 >Full Stack Developer</h6>
@@ -154,7 +157,7 @@ conditions caused by the pandemic. </h3>
 
 
                         </div>
-                        <h2 className="mt-4 space-x-2 text-xl font-bold text-center ">Niveen Smadi </h2>
+                        <h2 className="mt-4 space-x-2 text-xl font-bold text-center  animate-bounce">Niveen Smadi </h2>
                         <h6 >Full Stack Developer</h6>
 
                         <ul className="flex flex-row mt-4 space-x-2">
@@ -186,7 +189,7 @@ conditions caused by the pandemic. </h3>
                                 className="w-full h-full" />
                         </div>
 
-                        <h2 className="mt-4 text-xl font-bold text-center">Layan Abo-shaweesh</h2>
+                        <h2 className="mt-4 text-xl font-bold text-center  animate-bounce">Layan Abo-shaweesh</h2>
 
 
                         <h6 >Full Stack Developer</h6>

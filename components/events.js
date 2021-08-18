@@ -102,7 +102,7 @@ export default function Event(props){
                             type="button"
                              style={{ transition: "all .15s ease" }}
                             >
-                            <Link href={{pathname:"/gallery", query:{id:item.id}}} ><a>View</a></Link>
+                            <Link href={{pathname:"/gallery", query:{id:item.id}}} ><a className=" text-white hover:text-white">View</a></Link>
                             
                             </button>
                             </div>
