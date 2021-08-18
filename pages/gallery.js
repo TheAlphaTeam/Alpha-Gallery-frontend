@@ -16,7 +16,6 @@ export default function View() {
   async function getToken(credentials){
     const fetchedToken = await axios.post(`https://alphagallery.herokuapp.com/api/token/`, credentials);
     setToken(fetchedToken.data.access);
-    
   }
 
   async function getEventsData(id){

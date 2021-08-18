@@ -30,6 +30,8 @@
     "react-icons": "^4.2.0",
     "react-image-gallery": "^1.2.7",
     "react-native": "^0.65.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-simple-image-slider": "^2.1.2",
     "react-slick": "^0.28.1",
     "react-slideshow-image": "^3.5.0",
