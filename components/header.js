@@ -21,12 +21,12 @@ export default function Header (props) {
                   <Image src={logoPic} alt="logo"  width={250} height={65}   />
 
               </div>
-              <div  className='flex flex-row justify-end w-1/4'>
-                <button className='className="p-2 px-4 py-2 mb-3 ml-3 font-bold text-white bg-black rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none hover:bg-gray-700 lg:mr-1 lg:mb-0 hover:bg-gray-500"'>
+              <div  className='flex justify-end h-8 w-1/4'>
+                <button className="  font-bold text-white bg-black rounded shadow outline-none active:bg-black hover:shadow-md focus:outline-none  lg:mr-1 lg:mb-0 hover:bg-gray-700">
                 <a
                 className={ 
                   (props.transparent ? "text-white" : "text-gray-800") +
-                  " text-md font-bold font-sans leading-relaxed    whitespace-nowrap  text-white "
+                  " text-md font-bold font-sans  py-2 px-6 whitespace-nowrap  text-white "
                 } href='/logout'>
                 Logout
                 </a>

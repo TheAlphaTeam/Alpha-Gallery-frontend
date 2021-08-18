@@ -107,7 +107,11 @@ var images =[]
         <link rel="icon" href="/icon.ico" />
       </Head>
     <Header/>
-    <ImageGallery items={images} />
+    <div className="py-8"style={{ backgroundImage: `url('https://res2.weblium.site/res/5c74178873dbed00222cf694/5c75114c1947b80024e03da4_optimized_5120')` }}>
+    <div className="py-8"></div>
+    <ImageGallery items={images}  />
+    <div className="py-8"></div>
+    </div>
     <Footer/>
     </>
       )
